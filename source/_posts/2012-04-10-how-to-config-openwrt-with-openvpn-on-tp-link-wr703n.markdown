@@ -197,5 +197,4 @@ wr703n只有4MB的闪存，装完OpenWrt以后，只剩1.4MB的可用空间了�
 ## 后记
 
 * 可以配合使用chnroute，减少openvpn的流量消耗
-* 
 * 本文大部分内容都是源于这两个博客，感谢这两个博主的文章：[Lei Yang's Geek Life](http://blog.proadm.net/blog/2011/10/25/Building-a-GFWless-AP-on-WR703n/) 和 [Ratazzis's Blog](http://www.ratazzi.org/2012/02/09/install-openvpn-and-openwrt-on-wr703n/)
