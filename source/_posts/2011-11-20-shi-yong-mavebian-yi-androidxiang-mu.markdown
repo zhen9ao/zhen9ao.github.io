@@ -16,6 +16,7 @@ categories:
 
 本文主要介绍在Mac OS X下使用maven进行android编译需要的做的工作。
 
+<!--more-->
 
 ## 开始折腾
 
