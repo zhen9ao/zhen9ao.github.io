@@ -4,6 +4,7 @@ title: "解决Xcode4.3.2打开Organizer中的devices就崩溃的问题"
 date: 2012-04-20 09:23
 comments: true
 categories: 
+published: true
 ---
 
 ##问题描述
