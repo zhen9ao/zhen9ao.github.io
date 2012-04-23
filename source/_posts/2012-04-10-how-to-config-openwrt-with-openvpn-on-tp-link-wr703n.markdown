@@ -19,6 +19,8 @@ categories:
 1. 网线
 1. U盘（或TF卡+读卡器等） 
 
+<!--more-->
+
 ## 刷入固件
 
 * 下载对应的ROM文件，wr703n的文件在[这里](http://downloads.openwrt.org/snapshots/trunk/ar71xx/)，这是snapshot的代码库，更新比较频繁，如果使用了一段时间后装包提示版本问题，那么需要重新刷入最新的snapshot版包才行。
