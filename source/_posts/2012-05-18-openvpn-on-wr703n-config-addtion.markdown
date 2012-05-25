@@ -16,6 +16,8 @@ iptables -I FORWARD -o tun0 -j ACCEPT
 iptables -t nat -A POSTROUTING -s 192.168.2.0/24 -j MASQUERADE
 {% endcodeblock %}
 
+<!--more-->
+
 2. openvpn自动启动
 在`/etc/init.d`目录中创建一个shell启动脚本，仿照其他脚本的格式来写，大致格式如下：
 
