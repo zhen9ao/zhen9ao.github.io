@@ -110,12 +110,12 @@ OpenWrt需要配置的文件主要有以下几个：
 
 然后将`/etc/config/dhcp`中的`option resolvfile`选项修改为`/etc/resolv-gpd.conf`
 
-### `/etc/rc.local`
+### <del>`/etc/rc.local`</del> 此部分内容参看后记中的[第一点](http://blog.zhen9ao.me/blog/2012/05/18/openvpn-on-wr703n-config-addtion/)
 
-这里主要配置iptables的规则，在配置之前，可以把系统自带的firewall删除，firewall是基于iptables的简易配置工具
-> opkg remove firewall
+<del>这里主要配置iptables的规则，在配置之前，可以把系统自带的firewall删除，firewall是基于iptables的简易配置工。</del>
+> <del>opkg remove firewall</del>
 
-然后在`/etc/rc.local`中写入以下规则
+<del>然后在`/etc/rc.local`中写入以下规则
 
 	iptables -t nat -F
 	iptables -t filter -F
@@ -127,9 +127,9 @@ OpenWrt需要配置的文件主要有以下几个：
 	iptables -t nat -A POSTROUTING -s 192.168.2.0/24 -o eth0 -j MASQUERADE
 	iptables -t nat -A POSTROUTING -s 192.168.2.0/24 -o tun0 -j MASQUERADE
 
-上面的`tun0`代表的是OpenVPN的tunnel设备
+<del>上面的`tun0`代表的是OpenVPN的tunnel设备
 
-* 重启路由器后，将网线连接到上级路由器，这时就可以由wifi连接到路由器，访问网络了。
+* <del>重启路由器后，将网线连接到上级路由器，这时就可以由wifi连接到路由器，访问网络了。</del>
 
 ## USB配置
 
