@@ -105,6 +105,7 @@ OpenWrt需要配置的文件主要有以下几个：
 
 这个文件改动很少，可以配置dnsmasq的`resolvfile`，即DNS。可以新建一个文件`/etc/resolv-gpd.conf`，其中的内容如下
 
+    nameserver 199.91.73.222
 	nameserver 178.79.131.110
 	nameserver 8.8.8.8
 
