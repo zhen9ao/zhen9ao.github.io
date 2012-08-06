@@ -3,7 +3,7 @@ layout: post
 title: "使用mave编译Android项目"
 date: 2011-11-20 17:10
 comments: true
-categories: 
+categories: maven
 ---
 ## 为何打算使用Maven
 

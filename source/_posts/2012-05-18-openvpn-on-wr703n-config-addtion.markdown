@@ -3,7 +3,7 @@ layout: post
 title: "wr703n配置openvpn后记"
 date: 2012-05-18 22:44
 comments: true
-categories: 
+categories: openvpn
 ---
 
 ## 修正

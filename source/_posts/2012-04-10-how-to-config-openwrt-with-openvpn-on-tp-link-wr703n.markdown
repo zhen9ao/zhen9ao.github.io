@@ -4,7 +4,7 @@ title: "在TP-Link上安装OpenWrt并配置OpenVPN"
 date: 2012-04-10 10:18
 comments: true
 published: true
-categories: 
+categories: openvpn
 ---
 ## 路由器的选择
 
