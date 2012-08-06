@@ -12,6 +12,8 @@ Android官方的模拟器速度太慢，性能很差，导致在实际开发中�
 
 Android-86项目的ISO文件在[这里](http://www.android-x86.org/download)可以下载到。如果想在VirtualBox里面使用，最好下载以`eeepc`结尾的映像文件，兼容性比较好。比如我下载的是：`android-x86-2.3-RC1-eeepc.iso`
 
+<!--more-->
+
 ##安装
 
 1. 打开VirtualBox，创建虚拟机。
@@ -35,6 +37,6 @@ Android-86项目的ISO文件在[这里](http://www.android-x86.org/download)可�
 
 为了能进行adb远程调试，需要将虚拟机的网卡属性修改为`Bridged Adapter`在`Advance`中设置为`PCnet-FAST III(Am79C973)`。
 
-这样启动后虚拟机就和物理机处于同一个网段内，启动虚拟机后按`Cmd` + `Fn` + `F1`进入控制台界面，输入`netcfg`可以查看当前虚拟机分配的IP地址，这样就可以在屋里机中使用`adb connect IP`连接远程机器进行调试了，`Cmd`+`Fn`+`F7`退出控制台模式。
+这样启动后虚拟机就和物理机处于同一个网段内，启动虚拟机后按`Cmd` + `Fn` + `F1`进入控制台界面，输入`netcfg`可以查看当前虚拟机分配的IP地址，这样就可以在屋里机中使用`adb connect xxx.xxx.xxx.xxx`连接远程机器进行调试了，`Cmd`+`Fn`+`F7`退出控制台模式。
 
 PS：Android-x86对虚拟机的鼠标识别不好，所以要在菜单中设置`Disable Mouse Integration`，这样鼠标就可以在虚拟机中使用了
