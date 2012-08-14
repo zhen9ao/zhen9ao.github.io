@@ -103,11 +103,12 @@ OpenWrt需要配置的文件主要有以下几个：
 
 ### `/etc/config/dhcp`
 
-这个文件改动很少，可以配置dnsmasq的`resolvfile`，即DNS。可以新建一个文件`/etc/resolv-gpd.conf`，其中的内容如下
+这个文件改动很少，可以配置dnsmasq的`resolvfile`，即DNS。可以新建一个文件`/etc/resolv-gpd.conf`，其中的内容如下(这里用的是成都电信的dns，选择自己地区的dns作为备用dns，这样访问国内网络速度要快些)
 
-    nameserver 199.91.73.222
-	nameserver 178.79.131.110
+    #nameserver 199.91.73.222
+	#nameserver 178.79.131.110
 	nameserver 8.8.8.8
+	nameserver 61.139.2.69
 
 然后将`/etc/config/dhcp`中的`option resolvfile`选项修改为`/etc/resolv-gpd.conf`
 
