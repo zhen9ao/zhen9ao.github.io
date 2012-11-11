@@ -52,8 +52,8 @@ OpenWrt需要配置的文件主要有以下几个：
 * `/etc/config/network`  配置网络
 * `/etc/config/wireless`  配置无线属性
 * `/etc/config/dhcp`  配置dhcp等信息
-* `/etc/rc.local`  配置自动执行脚本
 * `/etc/config/fstab`  配置USB设备自动挂载
+* `/etc/config/firewall` 配置防火墙设置
 
 ### `/etc/config/network`
 
@@ -65,7 +65,7 @@ OpenWrt需要配置的文件主要有以下几个：
         option ipaddr '127.0.0.1'
         option netmask '255.0.0.0'
         
-	config interface 'lan'
+	config interface 'wifi'
         option proto 'static'
         option ipaddr '192.168.2.1'
         option netmask '255.255.255.0'
@@ -93,7 +93,7 @@ OpenWrt需要配置的文件主要有以下几个：
         
 	config wifi-iface
         option device   radio0
-        option network  lan
+        option network  wifi
         option mode     ap
         option ssid     yourssid
         option encryption psk2
@@ -121,15 +121,19 @@ iptables -I FORWARD -o tun0 -j ACCEPT
 iptables -t nat -A POSTROUTING -s 192.168.2.0/24 -j MASQUERADE
 {% endcodeblock %}
 
+## 防火墙配置(`/etc/config/firewall`)
+
+把该文件中的`lan`都改为`wifi`即可。
+
 
 ## USB配置
 
-wr703n只有4MB的闪存，装完OpenWrt以后，只剩1.4MB的可用空间了，这些空间只够装一些必备的工具，OpenVPN等一些软件就需要装载外挂的USB设备中了
+wr703n只有4MB的闪存，装完OpenWrt以后，只剩--1.4Mb--的(现在rom自带了luci，所以刷好后的可用空间只有900多Kb了)可用空间了，这些空间只够装一些必备的工具，OpenVPN等一些软件就需要装载外挂的USB设备中了
 
 ### 安装必备软件
 
 1. `kmod-usb-storage`, `block-mount`  用来挂载usb设备
-2. `kmod-fs-ext4`, `e2fsprogs`  用来启用对文件系统的支持
+2. `kmod-fs-ext4`  用来启用对文件系统的支持
 3. **`kmod-tun`** 虽然会随`openvpn`一起自动安装，但是将kmod-tun自动装在usb中可能会导致启动openvpn的时候提示tun设备无法找到的错误，所以在这里也将它先装到闪存中
 4. `ldconfig`  使得安装在USB中的lib能被找到
 
@@ -194,25 +198,51 @@ wr703n只有4MB的闪存，装完OpenWrt以后，只剩1.4MB的可用空间了�
 
 ##PS:
 
-openvpn自动启动
-在`/etc/init.d`目录中创建一个shell启动脚本，仿照其他脚本的格式来写，大致格式如下：
+~~openvpn自动启动
+在`/etc/init.d`目录中创建一个shell启动脚本，仿照其他脚本的格式来写，大致格式如下：~~
 
-{% codeblock %}
-#!/bin/sh /etc/rc.common
-# /init.d/openvpn
-START=50
-start() {
-	/mnt/usb/usr/sbin/openvpn /mnt/usb/blockcn/config.ovpn
-}
-stop() {
-	killall openvpn
-}
-{% endcodeblock %}
+	#!/bin/sh /etc/rc.common
+	# /init.d/openvpn
+	START=50
+	start() {
+		/mnt/usb/usr/sbin/openvpn /mnt/usb/blockcn/config.ovpn
+	}
+	stop() {
+		killall openvpn
+	}
 
-其中`start`中的路径都要写绝对路径，相对路径不管用的。
-然后要在`/etc/rc.d`中创建一个链接，指向刚才创建的脚本，如下：
+~~其中`start`中的路径都要写绝对路径，相对路径不管用的。
+然后要在`/etc/rc.d`中创建一个链接，指向刚才创建的脚本，如下：~~
 
 	ln -s /etc/init.d/openvpn /etc/rc.d/S50openvpn
+
+首先将openvpn的默认配置文件复制到`/etc/config`中
+
+	cp /mnt/usb/etc/config/openvpn /etc/config/
+
+修改默认配置文件中的第一个配置
+
+	config openvpn custom_config
+
+        # Set to 1 to enable this instance:
+        option enabled 1
+
+        # Include OpenVPN configuration
+        option config /mnt/usb/vpn/config.ovpn
+        
+主要将`enable`设置为`1`，配置文件指向自己的ovpn文件。
+
+然后将启动脚本复制到`/etc/init.d/`中
+
+	cp /mnt/usb/etc/init.d/openvpn /etc/init.d/
+
+修改启动脚本中的openvpn二进制文件位置，改成/mnt/usb/开头的位置。
+
+最后：
+
+	/etc/init.d/openvpn enable
+	
+这样就配置好了openvpn和自动启动
 
 ##PPS:
 	
