@@ -122,3 +122,18 @@ U盘要在Linux系统中先格式化成`ext4`的文件系统。
 这样，一个能进行脱机下载的OpenWrt路由器就配置好了！
 
 PS: 如果路由器同时也配置了openvpn服务，最好在下载的时候关闭openvpn，这样也防止vpn账号被警告。
+
+PPS: bt下载很费内存，所以建立一个swapfile来当做swap可以让bt下载比较稳定。
+
+	＃在/下创建一个64M的交换文件，时间较长
+	dd if=/dev/zero of=/swapfile bs=1024 count=62142
+	
+	mkswap /swapfile
+	
+	swapon /swapfile
+	
+然后修改`/etc/config/fstab`使得swap开机自动加载
+
+	config swap
+		option device /swapfile
+		option enabled 1

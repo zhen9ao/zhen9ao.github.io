@@ -110,16 +110,43 @@ OpenWrt需要配置的文件主要有以下几个：
 	nameserver 8.8.8.8
 	nameserver 61.139.2.69
 
-然后将`/etc/config/dhcp`中的`option resolvfile`选项修改为`/etc/resolv-gpd.conf`
+然后将`/etc/config/dhcp`中的`option resolvfile`选项修改为`/etc/resolv-gpd.conf`，并且配置`wan`口的dhcp，我的配置如下：
+
+	config dnsmasq
+		option domainneeded '1'
+		option boguspriv '1'
+		option localise_queries '1'
+		option rebind_protection '1'
+		option rebind_localhost '1'
+		option local '/lan/'
+		option domain 'lan'
+		option expandhosts '1'
+		option authoritative '1'
+		option readethers '1'
+		option leasefile '/tmp/dhcp.leases'
+		option resolvfile '/etc/resolv-gpd.conf'
+		option nohosts '1'
+
+	config dhcp 'wifi'
+		option interface 'wifi'
+		option start '100'
+		option limit '150'
+		option leasetime '12h'
+
+	config dhcp 'wan'
+		option interface 'wan'
+		option start '100'
+		option limit '150'
+		option leasetime '12h'
+		list dhcp_option '6,8.8.8.8,8.8.4.4'
 
 ## 防火墙配置(iptables)
 
 修改`/etc/firewall.user`文件，配置如下：
 
-{% codeblock %}
-iptables -I FORWARD -o tun0 -j ACCEPT
-iptables -t nat -A POSTROUTING -s 192.168.2.0/24 -j MASQUERADE
-{% endcodeblock %}
+	iptables -I FORWARD -o tun0 -j ACCEPT
+	iptables -t nat -A POSTROUTING -s 192.168.2.0/24 -j MASQUERADE
+
 
 ## 防火墙配置(`/etc/config/firewall`)
 
@@ -137,8 +164,9 @@ wr703n只有4MB的闪存，装完OpenWrt以后，只剩--1.4Mb--的(现在rom自
 3. **`kmod-tun`** 虽然会随`openvpn`一起自动安装，但是将kmod-tun自动装在usb中可能会导致启动openvpn的时候提示tun设备无法找到的错误，所以在这里也将它先装到闪存中
 4. `ldconfig`  使得安装在USB中的lib能被找到
 
-> opkg update
-> opkg install [package name]
+>	opkg update
+>	opkg install [package name]
+
 
 将`[package name]`替换为包名，可以连续键入多个包名，以空格隔开
 
@@ -148,27 +176,28 @@ wr703n只有4MB的闪存，装完OpenWrt以后，只剩--1.4Mb--的(现在rom自
 
 在Mac上分区格式化成功后，就可以将U盘接到路由器上，对其进行格式化，使其成为ext4格式
 
-> mkfs.ext4 -j /dev/sda1
+	mkfs.ext4 -j /dev/sda1
 
 等待结束后，就可以将U盘挂载到路由器上了
 
-> mkdir /mnt/usb
-> mount /dev/sda1 /mnt/usb
+	mkdir /mnt/usb
+	mount /dev/sda1 /mnt/usb
 
 这时候就可以查看到已有设备中已经挂载了`/dev/sda1`
 
-> df -h
+	df -h
 
 成功mount后，可以修改`/etc/config/fstab`，让USB设备在路由器启动时自动挂载
 
+
 	config mount
-  	  option uuid 033ab6ac-22ef-40c1-8a31-2dd61de49302
-	  option target /mnt/usb
-	  option device /dev/sda1
-	  option fstype ext4
-	  option options  rw,sync
-	  option enabled  1
-	  option enabled_fsck 0
+		option uuid 033ab6ac-22ef-40c1-8a31-2dd61de49302
+		option target /mnt/usb
+	  	option device /dev/sda1
+	  	option fstype ext4
+	  	option options  rw,sync
+	  	option enabled  1
+	  	option enabled_fsck 0
 
 其中的`uuid`可以由`blkid`命令查到，最后要启动fatab服务
 
@@ -181,13 +210,13 @@ wr703n只有4MB的闪存，装完OpenWrt以后，只剩--1.4Mb--的(现在rom自
 
 要在usb设备中安装软件需要在`/etc/opkg.conf`中添加`dest usb /mnt/usb`，之后执行一下命令
 
-> opkg -dest usb install openvpn
+	opkg -dest usb install openvpn
 
 安装安成后，可以在`/etc/profile`系统路径中加入openvpn的路径
 
 接下来要配置ldconfig，比较简单，创建文件`/etc/ld.so.conf`，在其中写入需要载入的lib文件路径即可，然后键入命令，启用配置
 
-> ldconfig
+	ldconfig
 
 最后，上传OpenVPN配置文件，启动OpenVPN，就可以实现在路由器上自由爬墙了～
 
@@ -252,13 +281,13 @@ OpenVPN配置文件
 
 使用chnroute的android配置文件即可
 
->	python chnroute.py -p android
+	python chnroute.py -p android
 
 这样得到了`vpnup.sh`和`vpndown.sh`文件，并且把下载下来的文件中前面的`alias`内容注释掉，因为在openwrt中不需要这些配置，会导致openvpn启动错误。
 
 将这两个文件上传到路由器的目录中，并将文件增加执行权限
 
->	chmod a+x vpnup.sh && chmod a+x vpndown.sh
+	chmod a+x vpnup.sh && chmod a+x vpndown.sh
 
 接下来是openvpn的config文件，大致配置如下：
 
