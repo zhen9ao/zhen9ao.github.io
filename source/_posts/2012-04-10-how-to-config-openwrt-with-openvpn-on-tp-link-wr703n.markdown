@@ -227,24 +227,6 @@ wr703n只有4MB的闪存，装完OpenWrt以后，只剩--1.4Mb--的(现在rom自
 
 ##PS:
 
-~~openvpn自动启动
-在`/etc/init.d`目录中创建一个shell启动脚本，仿照其他脚本的格式来写，大致格式如下：~~
-
-	#!/bin/sh /etc/rc.common
-	# /init.d/openvpn
-	START=50
-	start() {
-		/mnt/usb/usr/sbin/openvpn /mnt/usb/blockcn/config.ovpn
-	}
-	stop() {
-		killall openvpn
-	}
-
-~~其中`start`中的路径都要写绝对路径，相对路径不管用的。
-然后要在`/etc/rc.d`中创建一个链接，指向刚才创建的脚本，如下：~~
-
-	ln -s /etc/init.d/openvpn /etc/rc.d/S50openvpn
-
 首先将openvpn的默认配置文件复制到`/etc/config`中
 
 	cp /mnt/usb/etc/config/openvpn /etc/config/
