@@ -122,7 +122,7 @@ OpenWrt需要配置的文件主要有以下几个：
         option expandhosts '1'
         option authoritative '1'
         option readethers '1'
-        option leasefile '/tmp/'
+        option leasefile '/tmp/dhcp.leases'
         option resolvfile '/etc/resolv-gpd.conf'
         option nohosts '1'
         option nonegcache '1'
