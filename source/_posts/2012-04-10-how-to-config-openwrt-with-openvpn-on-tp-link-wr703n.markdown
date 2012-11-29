@@ -23,7 +23,7 @@ categories: openvpn
 
 ## 刷入固件
 
-* 下载对应的ROM文件，wr703n的文件在[这里](http://downloads.openwrt.org/attitude_adjustment/12.09-rc1/ar71xx/generic/)，这是snapshot的代码库，更新比较频繁，如果使用了一段时间后装包提示版本问题，那么需要重新刷入最新的snapshot版包才行。
+* 下载对应的ROM文件，wr703n的文件在[这里](http://downloads.openwrt.org/attitude_adjustment/12.09-rc1/ar71xx/generic/)，这是rc1的代码库。
 * ROM分两种，分别以factory和sysupgrade固件，以factory结束的用来从官方固件刷OpenWrt，以sysupgrade结束的固件是用来更新已有的OpenWrt。所以，新买的路由器应该选择对应的factory固件。
 
 ### 从官方固件升级
