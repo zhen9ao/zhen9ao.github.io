@@ -124,7 +124,6 @@ OpenWrt需要配置的文件主要有以下几个：
         option readethers '1'
         option leasefile '/tmp/'
         option resolvfile '/etc/resolv-gpd.conf'
-        option resolvfile '/home/vpn/resolv.openwrt.conf'
         option nohosts '1'
         option nonegcache '1'
         option strictorder '1'
