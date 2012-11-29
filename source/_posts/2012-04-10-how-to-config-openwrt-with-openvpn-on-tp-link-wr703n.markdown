@@ -105,41 +105,37 @@ OpenWrt需要配置的文件主要有以下几个：
 
 这个文件改动很少，可以配置dnsmasq的`resolvfile`，即DNS。可以新建一个文件`/etc/resolv-gpd.conf`，其中的内容如下(这里用的是成都电信的dns，选择自己地区的dns作为备用dns，这样访问国内网络速度要快些)
 
-    #nameserver 199.91.73.222
-	#nameserver 178.79.131.110
 	nameserver 8.8.8.8
-	nameserver 61.139.2.69
+	nameserver 8.8.4.4
+	nameserver 199.91.73.222
 
 然后将`/etc/config/dhcp`中的`option resolvfile`选项修改为`/etc/resolv-gpd.conf`，并且配置`wan`口的dhcp，我的配置如下：
 
 	config dnsmasq
 		option domainneeded '1'
-		option boguspriv '1'
-		option localise_queries '1'
-		option rebind_protection '1'
-		option rebind_localhost '1'
-		option local '/lan/'
-		option domain 'lan'
-		option expandhosts '1'
-		option authoritative '1'
-		option readethers '1'
-		option leasefile '/tmp/dhcp.leases'
-		option resolvfile '/etc/resolv-gpd.conf'
-		option nohosts '1'
+        option boguspriv '1'
+        option localise_queries '1'
+        option rebind_protection '1'
+        option rebind_localhost '1'
+        option local '/lan/'
+        option domain 'lan'
+        option expandhosts '1'
+        option authoritative '1'
+        option readethers '1'
+        option leasefile '/tmp/'
+        option resolvfile '/etc/resolv-gpd.conf'
+        option resolvfile '/home/vpn/resolv.openwrt.conf'
+        option nohosts '1'
+        option nonegcache '1'
+        option strictorder '1'
 
 	config dhcp 'wifi'
 		option interface 'wifi'
 		option start '100'
 		option limit '150'
 		option leasetime '12h'
-
-	config dhcp 'wan'
-		option interface 'wan'
-		option start '100'
-		option limit '150'
-		option leasetime '12h'
-		list dhcp_option '6,8.8.8.8,8.8.4.4'
-
+		
+		
 ## 防火墙配置(iptables)
 
 修改`/etc/firewall.user`文件，配置如下：
