@@ -61,5 +61,12 @@ categories:
     /etc/init.d/pdnsd enable
     /etc/init.d/pdnsd start
 
+为了加速苹果服务器的下载，可以为苹果服务器专门设置一个DNS server
+
+	exclude=appldlnld.apple.com,
+                supportdownload.apple.com,
+                swcdn.apple.com;
+
+添加这样几个例外，然后新建一个`server`代码块就行了。
 
 PS: 本文主要参考了：[用PDNSD + Google DNS 获得高速正确的dns解析](http://bullshitlie.blogspot.jp/2012/03/pdnsd-google-dns-dns.html)
