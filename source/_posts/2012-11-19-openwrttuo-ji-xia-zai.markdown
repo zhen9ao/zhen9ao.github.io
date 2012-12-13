@@ -3,7 +3,7 @@ layout: post
 title: "OpenWrt脱机下载"
 date: 2012-11-19 12:31
 comments: true
-categories: OpenWrt
+categories: OpenWrt BT
 ---
 
 一般为了实现脱机下载，可能会考虑搭建一个自用的NAS系统，不过这样的一个系统一般要准备一个小机箱之类的PC来搭建。考虑到耗电和成本的因素，加上OpenWrt很好很强大，所以完全没必要为了脱机下载专门配个Atom芯片的PC，一个路由器足以搞定。

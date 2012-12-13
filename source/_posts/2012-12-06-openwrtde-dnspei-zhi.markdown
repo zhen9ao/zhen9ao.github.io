@@ -3,7 +3,7 @@ layout: post
 title: "OpenWrt的DNS配置"
 date: 2012-12-06 21:30
 comments: true
-categories: 
+categories: OpenWrt OpenVPN
 ---
 
 本文主要研究一下OpenWrt中的DNS配置的相关内容，介绍以下内容：

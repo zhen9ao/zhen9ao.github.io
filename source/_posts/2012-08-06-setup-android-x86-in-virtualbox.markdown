@@ -4,7 +4,7 @@ title: "在VirtualBox中配置Android-x86"
 date: 2012-08-06 09:38
 comments: true
 published: true
-categories: android
+categories: Android VirtualBox
 ---
 Android官方的模拟器速度太慢，性能很差，导致在实际开发中基本只能使用真机进行调试。下面就介绍一下[Android-x86](http://www.android-x86.org/)项目，顾名思义，这个项目是为x86平台设计的Android系统，该系统可以运行在VirtualBox等虚拟机中。效率比官方的模拟器高出很多。
 

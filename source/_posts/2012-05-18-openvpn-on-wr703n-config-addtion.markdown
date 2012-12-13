@@ -4,7 +4,7 @@ title: "wr703n配置openvpn后记"
 date: 2012-05-18 22:44
 comments: true
 published: false
-categories: openvpn
+categories: OpenVPN wr703n
 ---
 
 ## 修正

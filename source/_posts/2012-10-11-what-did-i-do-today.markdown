@@ -4,7 +4,7 @@ title: "今天都折腾了些什么"
 date: 2012-10-11 00:24
 comments: true
 published: true
-categories: 
+categories: Daily
 ---
 
 ##zsh
