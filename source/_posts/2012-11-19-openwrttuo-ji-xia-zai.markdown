@@ -25,6 +25,7 @@ categories: OpenWrt BT
 
 <!--more-->
 
+可以参考这里的官方文档： [点我](http://wiki.openwrt.org/doc/howto/extroot)
 
 需要安装几个包： `kmod-usb-storage`、`block-mount`、`kmod-fs-ext4`。
 
@@ -33,12 +34,12 @@ U盘要在Linux系统中先格式化成`ext4`的文件系统。
 修改`/etc/config/fstab`：
 
 	config mount
+		option target 			/overlay
         option device   		/dev/sda1
         option fstype   		ext4
         option options  		rw,sync
         option enabled  		1
-        option enabled_fsck 	1
-        option is_rootfs 		1
+        option enabled_fsck 	0
 	config swap
         option device   /dev/sda2
         option enabled  1
