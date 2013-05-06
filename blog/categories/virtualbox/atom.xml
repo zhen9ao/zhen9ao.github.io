@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: VirtualBox | Jack's Blog]]></title>
+  <link href="http://zhen9ao.github.io/blog/categories/virtualbox/atom.xml" rel="self"/>
+  <link href="http://zhen9ao.github.io/"/>
+  <updated>2013-05-06T17:40:44+08:00</updated>
+  <id>http://zhen9ao.github.io/</id>
+  <author>
+    <name><![CDATA[zhen9ao]]></name>
+    <email><![CDATA[zhen9ao@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[在VirtualBox中配置Android-x86]]></title>
+    <link href="http://zhen9ao.github.io/blog/2012/08/06/setup-android-x86-in-virtualbox/"/>
+    <updated>2012-08-06T09:38:00+08:00</updated>
+    <id>http://zhen9ao.github.io/blog/2012/08/06/setup-android-x86-in-virtualbox</id>
+    <content type="html"><![CDATA[<p>Android官方的模拟器速度太慢，性能很差，导致在实际开发中基本只能使用真机进行调试。下面就介绍一下<a href="http://www.android-x86.org/">Android-x86</a>项目，顾名思义，这个项目是为x86平台设计的Android系统，该系统可以运行在VirtualBox等虚拟机中。效率比官方的模拟器高出很多。</p>
+
+<h2>下载ISO文件</h2>
+
+<p>Android-86项目的ISO文件在<a href="http://www.android-x86.org/download">这里</a>可以下载到。如果想在VirtualBox里面使用，最好下载以<code>eeepc</code>结尾的映像文件，兼容性比较好。比如我下载的是：<code>android-x86-2.3-RC1-eeepc.iso</code></p>
+
+<!--more-->
+
+
+<h2>安装</h2>
+
+<ol>
+<li>打开VirtualBox，创建虚拟机。</li>
+<li><code>Operating System</code>：<code>Linux</code>，<code>Version</code>：<code>Other Linux</code>。<code>内存</code>：<code>1024MB</code>，<code>硬盘空间</code>:<code>512MB</code>，其他选项可以使用默认配置。</li>
+<li>启动虚拟机。选择<code>Install to Hard Disk</code>进行安装。安装中要这样选择：</li>
+<li><code>Create/Modify partitions</code></li>
+<li><code>New</code> -> <code>Primary</code> -> <code>534MB</code> -> <code>Bootable</code> -> <code>Write</code> -> <code>yes</code> -> <code>Quit</code></li>
+<li>分区结束后在列表里就出现了刚创建的分区<code>sda1</code>。选择这个分区，格式化成<code>ext3</code>格式。接下来，一直选择<code>yes</code>.</li>
+<li>最后可以创建一个<code>Fake SD Card</code>，这样重启过后就安装完成了。</li>
+<li>安装完成后要记得将ISO文件移除，这样就可以从安装目录启动了。</li>
+</ol>
+
+
+<h2>配置启动参数</h2>
+
+<p>开发Android就是要适配不同的分辨率，但是默认启动的分辨率一般是不能满足需求的，所以可以配置几个启动参数，配置好后每次启动只需要选择即可。</p>
+
+<p>可以按这个帖子的内容进行配置：--> <a href="http://stackoverflow.com/a/8273560/401406">StackOverflow</a></p>
+
+<p>其中可以配置多个分辨率，然后设置成<code>vga=ask</code>，这样每次启动的时候就可以根据需要选择不同的分辨率。</p>
+
+<h2>使用</h2>
+
+<p>为了能进行adb远程调试，需要将虚拟机的网卡属性修改为<code>Bridged Adapter</code>在<code>Advance</code>中设置为<code>PCnet-FAST III(Am79C973)</code>。</p>
+
+<p>这样启动后虚拟机就和物理机处于同一个网段内，启动虚拟机后按<code>Cmd</code> + <code>Fn</code> + <code>F1</code>进入控制台界面，输入<code>netcfg</code>可以查看当前虚拟机分配的IP地址，这样就可以在屋里机中使用<code>adb connect xxx.xxx.xxx.xxx</code>连接远程机器进行调试了，<code>Cmd</code>+<code>Fn</code>+<code>F7</code>退出控制台模式。</p>
+
+<p>PS：Android-x86对虚拟机的鼠标识别不好，所以要在菜单中设置<code>Disable Mouse Integration</code>，这样鼠标就可以在虚拟机中使用了</p>
+
+<p>PPS：安装4.0的系统可能会出现网络问题，这是因为默认的dns服务器没有配置正确，打开控制台，这样配置：</p>
+
+<blockquote><p>setprop net.dns1 8.8.8.8</p></blockquote>
+
+<p>配置一个能用的dns就可以了</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: java | Jack's Blog]]></title>
+  <link href="http://zhen9ao.github.io/blog/categories/java/atom.xml" rel="self"/>
+  <link href="http://zhen9ao.github.io/"/>
+  <updated>2013-05-06T17:40:44+08:00</updated>
+  <id>http://zhen9ao.github.io/</id>
+  <author>
+    <name><![CDATA[zhen9ao]]></name>
+    <email><![CDATA[zhen9ao@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[IntelliJ IDEA中手动强制更新Maven Dependencies]]></title>
+    <link href="http://zhen9ao.github.io/blog/2012/04/26/refresh-maven-dependency-manually-in-intellij-idea/"/>
+    <updated>2012-04-26T12:01:00+08:00</updated>
+    <id>http://zhen9ao.github.io/blog/2012/04/26/refresh-maven-dependency-manually-in-intellij-idea</id>
+    <content type="html"><![CDATA[<p>Intellj IDEA 的自动载入Mave依赖的功能虽然好用，但有时候依赖多了或者缓存出问题，就会导致修改pom文件却没有触发自动重新载入的动作，这个时候就需要手动强制让Intellj IDEA更新依赖了。主要需要以下两步：</p>
+
+<ol>
+<li>手动删除<code>Project Settings</code>里面的<code>Libraries</code>内容</li>
+<li><code>mvn clean</code>删除之前编译过的文件</li>
+<li><code>Reimport all maven projects</code></li>
+</ol>
+
+]]></content>
+  </entry>
+  
+</feed>

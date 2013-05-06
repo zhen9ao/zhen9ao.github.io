@@ -9,8 +9,7 @@
   <meta name="author" content="zhen9ao">
 
   
-  <meta name="description" content="安装vpnc 连接IPSec需要用到vpnc这个包，通过opkg进行安装。 配置vpnc 在/etc/vpnc/目录下创建配置文件，内容如下： IPSec gateway server-address
-IPSec ID group-name IPSec secret psk-secret &hellip;">
+  <meta name="description" content="Intellj IDEA 的自动载入Mave依赖的功能虽然好用，但有时候依赖多了或者缓存出问题，就会导致修改pom文件却没有触发自动重新载入的动作，这个时候就需要手动强制让Intellj IDEA更新依赖了。主要需要以下两步： 手动删除Project Settings里面的Libraries内容 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +18,7 @@ IPSec ID group-name IPSec secret psk-secret &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://zhen9ao.github.io">
+  <link rel="canonical" href="http://zhen9ao.github.io/blog/page/2">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Jack's Blog" type="application/atom+xml">
@@ -91,7 +90,7 @@ IPSec ID group-name IPSec secret psk-secret &hellip;">
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2012/12/13/lu-you-qi-shang-shi-yong-cisco-ipseclian-jie-wang-luo/">路由器上使用Cisco IPSec连接网络</a></h1>
+      <h1 class="entry-title"><a href="/blog/2012/04/26/refresh-maven-dependency-manually-in-intellij-idea/">IntelliJ IDEA中手动强制更新Maven Dependencies</a></h1>
     
     
       <p class="meta">
@@ -107,115 +106,25 @@ IPSec ID group-name IPSec secret psk-secret &hellip;">
   
 
 
-<time datetime="2012-12-13T21:30:00+08:00" pubdate data-updated="true">Dec 13<span>th</span>, 2012</time>
+<time datetime="2012-04-26T12:01:00+08:00" pubdate data-updated="true">Apr 26<span>th</span>, 2012</time>
         
-         | <a href="/blog/2012/12/13/lu-you-qi-shang-shi-yong-cisco-ipseclian-jie-wang-luo/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>安装<code>vpnc</code></h2>
-
-<p>连接<code>IPSec</code>需要用到<code>vpnc</code>这个包，通过<code>opkg</code>进行安装。</p>
-
-<h2>配置<code>vpnc</code></h2>
-
-<p>在<code>/etc/vpnc/</code>目录下创建配置文件，内容如下：</p>
-
-<pre><code>IPSec gateway server-address
-IPSec ID group-name 
-IPSec secret psk-secret
-Xauth username vpn-username
-Xauth password vpn-password
-NAT Traversal Mode cisco-udp
-</code></pre>
-
-<p>然后运行命令即可启动ipsec了，也创建了一个<code>tun</code>的网络设备</p>
-
-<pre><code>vpn /etc/vpnc/your-config
-</code></pre>
-
-<h2>完善</h2>
-
-<p>虽然已经创建了<code>tun</code>的设备，但是会发现有些网页可以打开，有些则不行，丢包的情况非常严重，这是因为<code>vpnc</code>创建的这个网络设备的<code>mtu</code>值是<code>1412</code>，而不是一般的<code>1500</code>，所以利用<code>iptables</code>对数据包进行整形。</p>
-
-<p>在<code>/etc/firewall.user</code>中添加如下内容：</p>
-
-<pre><code>iptables -t mangle -I FORWARD -o tun+ -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
-iptables -t mangle -I FORWARD -i tun+ -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
-iptables -t mangle -A OUTPUT -o tun+ -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
-iptables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
-</code></pre>
-
-<p>重启firewall后网站就能正常打开了。</p>
-
-<h2>路由表</h2>
-
-<p>与OpenVPN相同，最好也配置一下路由表，让国内IP不走tun设备，可以依然使用之前的<code>chnroute</code>生成的<code>vpnup.sh</code>文件，但是要进行一点点修改。把<code>OLDGW</code>手动进行设置为上级路由器的网关，如我的上级路由器的网关是<code>192.168.1.1</code>，则设置：</p>
-
-<pre><code>OLDGW=192.168.1.1
-</code></pre>
-
-<p>即可。</p>
-
-<p>启动好vpnc后，运行一下vpnup.sh，就配置好国内路由了。</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/12/06/openwrtde-dnspei-zhi/">OpenWrt的DNS配置</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-12-06T21:30:00+08:00" pubdate data-updated="true">Dec 6<span>th</span>, 2012</time>
-        
-         | <a href="/blog/2012/12/06/openwrtde-dnspei-zhi/#disqus_thread">Comments</a>
+         | <a href="/blog/2012/04/26/refresh-maven-dependency-manually-in-intellij-idea/#disqus_thread">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>本文主要研究一下OpenWrt中的DNS配置的相关内容，介绍以下内容：</p>
+  <div class="entry-content"><p>Intellj IDEA 的自动载入Mave依赖的功能虽然好用，但有时候依赖多了或者缓存出问题，就会导致修改pom文件却没有触发自动重新载入的动作，这个时候就需要手动强制让Intellj IDEA更新依赖了。主要需要以下两步：</p>
 
 <ol>
-<li>dnsmasq的更多配置，给域名设置独立的DNS server。</li>
-<li>用pdnsd配置一个更安全、快速的DNS server。</li>
+<li>手动删除<code>Project Settings</code>里面的<code>Libraries</code>内容</li>
+<li><code>mvn clean</code>删除之前编译过的文件</li>
+<li><code>Reimport all maven projects</code></li>
 </ol>
 
-
-<h2>dnsmasq</h2>
-
-<p>国外域名用Google DNS进行解析还好说，国内的域名如果用Google DNS进行解析，可能会出现返回的服务器IP不是离你最近的情况，导致服务器响应没那么快，比较常见的是Youku等视频网站。所以针对这种情况，针对国内的域名，配置国内的DNS服务。</p>
-
 </div>
   
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/12/06/openwrtde-dnspei-zhi/">Read on &rarr;</a>
-    </footer>
   
 
 
@@ -226,7 +135,7 @@ iptables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --cla
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2012/11/19/openwrttuo-ji-xia-zai/">OpenWrt脱机下载</a></h1>
+      <h1 class="entry-title"><a href="/blog/2012/04/20/resolve-xcode-4-dot-3-2-organizer-crash/">解决Xcode4.3.2打开Organizer中的devices就崩溃的问题</a></h1>
     
     
       <p class="meta">
@@ -242,32 +151,74 @@ iptables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --cla
   
 
 
-<time datetime="2012-11-19T12:31:00+08:00" pubdate data-updated="true">Nov 19<span>th</span>, 2012</time>
+<time datetime="2012-04-20T09:23:00+08:00" pubdate data-updated="true">Apr 20<span>th</span>, 2012</time>
         
-         | <a href="/blog/2012/11/19/openwrttuo-ji-xia-zai/#disqus_thread">Comments</a>
+         | <a href="/blog/2012/04/20/resolve-xcode-4-dot-3-2-organizer-crash/#disqus_thread">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>一般为了实现脱机下载，可能会考虑搭建一个自用的NAS系统，不过这样的一个系统一般要准备一个小机箱之类的PC来搭建。考虑到耗电和成本的因素，加上OpenWrt很好很强大，所以完全没必要为了脱机下载专门配个Atom芯片的PC，一个路由器足以搞定。</p>
+  <div class="entry-content"><h2>问题描述</h2>
 
-<h3>准备</h3>
+<p>这个问题不知是什么原因导致，但是造成了Xcode可以打开项目，可以打开Organizer看文档等操作，但是切换到Devices标签，就会让整个Xcode崩溃。</p>
 
-<p>一个可以刷OpenWrt的路由器（我用的wr703n），一个大U盘（现在U盘都非常便宜，100多就可以买一个32G的），一个Linux虚拟机或者物理机。</p>
+<h2>解决</h2>
 
-<h2>配置OpenWrt</h2>
+<p>在网上找了很多，试了许多方法，比如：TimeMachine恢复到之前的系统状态、重新安装Xcode、修复磁盘权限等，这些办法都无效。Google了一下发现出现这个问题的人不少，StackOverflow上就有很多人提了这个问题，也有很多解决方案，最后还是<a href="http://stackoverflow.com/a/9729656/401406">这个</a>办法解决了我的问题。
+看来是Xcode4.3.2在Keychain处理上的问题，按苹果<a href="http://support.apple.com/kb/TS1544?viewlocale=en_US&amp;locale=en_US">官方文档</a>重置了Keychain，就解决了。不过这样做的后果就是开发者证书要重新导入，一些软件要提示重新输入密码。
+P.S.：也许可以在Keychain中进行修复而不是重置来解决这个问题，遇到同样问题的同学可以试试。</p>
+</div>
+  
+  
 
-<p>刷好OpenWrt之后，只需要先把网络、无线先配置好，然后通过wifi连接路由器。</p>
 
-<h3>让路由器从U盘引导启动</h3>
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/04/10/how-to-config-openwrt-with-openvpn-on-tp-link-wr703n/">在TP-Link上安装OpenWrt并配置OpenVPN</a></h1>
+    
+    
+      <p class="meta">
+        
 
-<p>这么做，有几个好处：</p>
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-10T10:18:00+08:00" pubdate data-updated="true">Apr 10<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/04/10/how-to-config-openwrt-with-openvpn-on-tp-link-wr703n/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>路由器的选择</h2>
+
+<p>要安装OpenWrt，首先要选择一款适合的路由器。可以在OpenWrt的官网中查看支持的<a href="http://wiki.openwrt.org/toh/start">设备列表</a>，从中选择可以使用的设备。最好选择带USB口的设备（这样可以接U盘，把需要的软件装到U盘中，比如OpenVPN和Python等组件），一般带USB口的设备都是3G路由器或比较高端的路由器，从节约成本的角度考虑，最好是选择3G路由器，高端路由器当然更好，有更强大的CPU。</p>
+
+<p>我选择了<a href="http://www.tp-link.cn/pages/product-detail.asp?d=225">TP-Link wr703n</a>，这款路由器小巧，方便携带，但功能不弱。</p>
+
+<h2>准备工作</h2>
+
+<p>这里主要考虑的是wr703n只做爬墙使用，不做PPPoE拨号，所以需要准备的东西如下：</p>
 
 <ol>
-<li>使用<code>opkg</code>安装的东西就默认在U盘了，需要装什么就可以尽情的装。</li>
-<li>如果以后再对路由器修改配置导致路由器变砖或者无法启动，拔掉U盘就可以从路由器的存储启动了，不用重新刷机。</li>
+<li>网线</li>
+<li>U盘（或TF卡+读卡器等）</li>
 </ol>
 
 
@@ -275,7 +226,7 @@ iptables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --cla
   
   
     <footer>
-      <a rel="full-article" href="/blog/2012/11/19/openwrttuo-ji-xia-zai/">Read on &rarr;</a>
+      <a rel="full-article" href="/blog/2012/04/10/how-to-config-openwrt-with-openvpn-on-tp-link-wr703n/">Read on &rarr;</a>
     </footer>
   
 
@@ -287,7 +238,7 @@ iptables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --cla
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2012/10/11/what-did-i-do-today/">今天都折腾了些什么</a></h1>
+      <h1 class="entry-title"><a href="/blog/2011/11/20/shi-yong-mavebian-yi-androidxiang-mu/">使用mave编译Android项目</a></h1>
     
     
       <p class="meta">
@@ -303,28 +254,31 @@ iptables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --cla
   
 
 
-<time datetime="2012-10-11T00:24:00+08:00" pubdate data-updated="true">Oct 11<span>th</span>, 2012</time>
+<time datetime="2011-11-20T17:10:00+08:00" pubdate data-updated="true">Nov 20<span>th</span>, 2011</time>
         
-         | <a href="/blog/2012/10/11/what-did-i-do-today/#disqus_thread">Comments</a>
+         | <a href="/blog/2011/11/20/shi-yong-mavebian-yi-androidxiang-mu/#disqus_thread">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><h2>zsh</h2>
+  <div class="entry-content"><h2>为何打算使用Maven</h2>
 
-<p>在看Ruby的时候，发现有人在提zsh，于是打算再次尝试。之前装过，但是重装系统后觉得麻烦就没再装了，今天看到一个不错的项目<a href="https://github.com/robbyrussell/oh-my-zsh"><code>oh-my-zshell</code></a>。它是一个帮助我们安装、管理和配置zsh的工具，使用起来也很简单。按主页上的说明自动安装即可：</p>
+<ol>
+<li><p>maven可以让目录更加简洁和清晰</p></li>
+<li><p>利用maven，不用手动下载依赖的各种jar文件，可以减小源码大小，所需的依赖库都又maven自动处理。</p></li>
+<li><p>主要使用了开源的maven-android-plugin（3.0版本改名为<a href="http://code.google.com/p/maven-android-plugin/wiki/PluginRenamed">android-maven-plugin</a>）插件</p></li>
+</ol>
 
-<blockquote><p>curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sh</p></blockquote>
 
-<p>安装好了以后会在<code>~</code>目录创建一个<code>.zshrc</code>的zsh配置文件。其中前面的部分是<code>oh-my-zsh</code>的配置部分，可以对<code>配色</code>、<code>插件</code>进行配置。zsh的一个优势是和bash兼容，能执行<code>.bash_profile</code>或<code>.bashrc</code>中的配置，所以把bash的配置拷到zshrc的最后即可完成对已有配置的修改。</p>
+<p>本文主要介绍在Mac OS X下使用maven进行android编译需要的做的工作。</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/blog/2012/10/11/what-did-i-do-today/">Read on &rarr;</a>
+      <a rel="full-article" href="/blog/2011/11/20/shi-yong-mavebian-yi-androidxiang-mu/">Read on &rarr;</a>
     </footer>
   
 
@@ -336,7 +290,7 @@ iptables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --cla
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2012/08/06/setup-android-x86-in-virtualbox/">在VirtualBox中配置Android-x86</a></h1>
+      <h1 class="entry-title"><a href="/blog/2011/11/16/hello-world/">Hello World</a></h1>
     
     
       <p class="meta">
@@ -352,27 +306,20 @@ iptables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --cla
   
 
 
-<time datetime="2012-08-06T09:38:00+08:00" pubdate data-updated="true">Aug 6<span>th</span>, 2012</time>
+<time datetime="2011-11-16T09:14:00+08:00" pubdate data-updated="true">Nov 16<span>th</span>, 2011</time>
         
-         | <a href="/blog/2012/08/06/setup-android-x86-in-virtualbox/#disqus_thread">Comments</a>
+         | <a href="/blog/2011/11/16/hello-world/#disqus_thread">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>Android官方的模拟器速度太慢，性能很差，导致在实际开发中基本只能使用真机进行调试。下面就介绍一下<a href="http://www.android-x86.org/">Android-x86</a>项目，顾名思义，这个项目是为x86平台设计的Android系统，该系统可以运行在VirtualBox等虚拟机中。效率比官方的模拟器高出很多。</p>
+  <div class="entry-content"><p>Hello World from octopross!!</p>
 
-<h2>下载ISO文件</h2>
-
-<p>Android-86项目的ISO文件在<a href="http://www.android-x86.org/download">这里</a>可以下载到。如果想在VirtualBox里面使用，最好下载以<code>eeepc</code>结尾的映像文件，兼容性比较好。比如我下载的是：<code>android-x86-2.3-RC1-eeepc.iso</code></p>
-
+<p>欢迎来!</p>
 </div>
   
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/08/06/setup-android-x86-in-virtualbox/">Read on &rarr;</a>
-    </footer>
   
 
 
@@ -380,9 +327,9 @@ iptables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --cla
   
   <div class="pagination">
     
-      <a class="prev" href="/blog/page/2/">&larr; Older</a>
-    
     <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/">Newer &rarr;</a>
     
   </div>
 </div>

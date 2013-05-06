@@ -1,0 +1,397 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>在VirtualBox中配置Android-x86 - Jack's Blog</title>
+  <meta name="author" content="zhen9ao">
+
+  
+  <meta name="description" content="Android官方的模拟器速度太慢，性能很差，导致在实际开发中基本只能使用真机进行调试。下面就介绍一下Android-x86项目，顾名思义，这个项目是为x86平台设计的Android系统，该系统可以运行在VirtualBox等虚拟机中。效率比官方的模拟器高出很多。 下载ISO文件 Android- &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://zhen9ao.github.io/blog/2012/08/06/setup-android-x86-in-virtualbox">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Jack's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-27179534-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <div id="logo">
+  	<div id="logoLeft">{</div>
+  	<div id="logoText">mob</div>
+  	<div id="logoRight">}</div>
+  	<div class="clear"></div>
+  </div>
+  <h1><a href="/">Jack's Blog</a></h1>
+  
+    <h2>My blogging place</h2>
+  
+  <div class="clear"></div>
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:zhen9ao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">在VirtualBox中配置Android-x86</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-06T09:38:00+08:00" pubdate data-updated="true">Aug 6<span>th</span>, 2012</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Android官方的模拟器速度太慢，性能很差，导致在实际开发中基本只能使用真机进行调试。下面就介绍一下<a href="http://www.android-x86.org/">Android-x86</a>项目，顾名思义，这个项目是为x86平台设计的Android系统，该系统可以运行在VirtualBox等虚拟机中。效率比官方的模拟器高出很多。</p>
+
+<h2>下载ISO文件</h2>
+
+<p>Android-86项目的ISO文件在<a href="http://www.android-x86.org/download">这里</a>可以下载到。如果想在VirtualBox里面使用，最好下载以<code>eeepc</code>结尾的映像文件，兼容性比较好。比如我下载的是：<code>android-x86-2.3-RC1-eeepc.iso</code></p>
+
+<!--more-->
+
+
+<h2>安装</h2>
+
+<ol>
+<li>打开VirtualBox，创建虚拟机。</li>
+<li><code>Operating System</code>：<code>Linux</code>，<code>Version</code>：<code>Other Linux</code>。<code>内存</code>：<code>1024MB</code>，<code>硬盘空间</code>:<code>512MB</code>，其他选项可以使用默认配置。</li>
+<li>启动虚拟机。选择<code>Install to Hard Disk</code>进行安装。安装中要这样选择：</li>
+<li><code>Create/Modify partitions</code></li>
+<li><code>New</code> -> <code>Primary</code> -> <code>534MB</code> -> <code>Bootable</code> -> <code>Write</code> -> <code>yes</code> -> <code>Quit</code></li>
+<li>分区结束后在列表里就出现了刚创建的分区<code>sda1</code>。选择这个分区，格式化成<code>ext3</code>格式。接下来，一直选择<code>yes</code>.</li>
+<li>最后可以创建一个<code>Fake SD Card</code>，这样重启过后就安装完成了。</li>
+<li>安装完成后要记得将ISO文件移除，这样就可以从安装目录启动了。</li>
+</ol>
+
+
+<h2>配置启动参数</h2>
+
+<p>开发Android就是要适配不同的分辨率，但是默认启动的分辨率一般是不能满足需求的，所以可以配置几个启动参数，配置好后每次启动只需要选择即可。</p>
+
+<p>可以按这个帖子的内容进行配置：&#8211;> <a href="http://stackoverflow.com/a/8273560/401406">StackOverflow</a></p>
+
+<p>其中可以配置多个分辨率，然后设置成<code>vga=ask</code>，这样每次启动的时候就可以根据需要选择不同的分辨率。</p>
+
+<h2>使用</h2>
+
+<p>为了能进行adb远程调试，需要将虚拟机的网卡属性修改为<code>Bridged Adapter</code>在<code>Advance</code>中设置为<code>PCnet-FAST III(Am79C973)</code>。</p>
+
+<p>这样启动后虚拟机就和物理机处于同一个网段内，启动虚拟机后按<code>Cmd</code> + <code>Fn</code> + <code>F1</code>进入控制台界面，输入<code>netcfg</code>可以查看当前虚拟机分配的IP地址，这样就可以在屋里机中使用<code>adb connect xxx.xxx.xxx.xxx</code>连接远程机器进行调试了，<code>Cmd</code>+<code>Fn</code>+<code>F7</code>退出控制台模式。</p>
+
+<p>PS：Android-x86对虚拟机的鼠标识别不好，所以要在菜单中设置<code>Disable Mouse Integration</code>，这样鼠标就可以在虚拟机中使用了</p>
+
+<p>PPS：安装4.0的系统可能会出现网络问题，这是因为默认的dns服务器没有配置正确，打开控制台，这样配置：</p>
+
+<blockquote><p>setprop net.dns1 8.8.8.8</p></blockquote>
+
+<p>配置一个能用的dns就可以了</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">zhen9ao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-06T09:38:00+08:00" pubdate data-updated="true">Aug 6<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/android/'>Android</a>, <a class='category' href='/blog/categories/virtualbox/'>VirtualBox</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://zhen9ao.github.io/blog/2012/08/06/setup-android-x86-in-virtualbox/" data-via="zhen9ao" data-counturl="http://zhen9ao.github.io/blog/2012/08/06/setup-android-x86-in-virtualbox/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/04/26/refresh-maven-dependency-manually-in-intellij-idea/" title="Previous Post: IntelliJ IDEA中手动强制更新Maven Dependencies">&laquo; IntelliJ IDEA中手动强制更新Maven Dependencies</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/10/11/what-did-i-do-today/" title="Next Post: 今天都折腾了些什么">今天都折腾了些什么 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Categories</h1>
+  <ul id="categories">
+    <li class='category'><a href='/blog/categories/android/'>Android (1)</a></li>
+<li class='category'><a href='/blog/categories/bt/'>BT (1)</a></li>
+<li class='category'><a href='/blog/categories/daily/'>Daily (1)</a></li>
+<li class='category'><a href='/blog/categories/ipsec/'>IPSec (1)</a></li>
+<li class='category'><a href='/blog/categories/openvpn/'>OpenVPN (2)</a></li>
+<li class='category'><a href='/blog/categories/openwrt/'>OpenWrt (4)</a></li>
+<li class='category'><a href='/blog/categories/virtualbox/'>VirtualBox (1)</a></li>
+<li class='category'><a href='/blog/categories/xcode/'>Xcode (1)</a></li>
+<li class='category'><a href='/blog/categories/java/'>java (1)</a></li>
+<li class='category'><a href='/blog/categories/maven/'>maven (2)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/12/13/lu-you-qi-shang-shi-yong-cisco-ipseclian-jie-wang-luo/">路由器上使用Cisco IPSec连接网络</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/12/06/openwrtde-dnspei-zhi/">OpenWrt的DNS配置</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/11/19/openwrttuo-ji-xia-zai/">OpenWrt脱机下载</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/10/11/what-did-i-do-today/">今天都折腾了些什么</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/08/06/setup-android-x86-in-virtualbox/">在VirtualBox中配置Android-x86</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/zhen9ao">@zhen9ao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'zhen9ao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("zhen9ao", 5, true);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/zhen9ao" class="twitter-follow-button" data-show-count="true">Follow @zhen9ao</a>
+  
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/108753779288616834499?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - zhen9ao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'zhen9ao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://zhen9ao.github.io/blog/2012/08/06/setup-android-x86-in-virtualbox/';
+        var disqus_url = 'http://zhen9ao.github.io/blog/2012/08/06/setup-android-x86-in-virtualbox/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

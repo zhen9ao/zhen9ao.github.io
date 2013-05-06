@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: IPSec | Jack's Blog]]></title>
+  <link href="http://zhen9ao.github.io/blog/categories/ipsec/atom.xml" rel="self"/>
+  <link href="http://zhen9ao.github.io/"/>
+  <updated>2013-05-06T17:40:44+08:00</updated>
+  <id>http://zhen9ao.github.io/</id>
+  <author>
+    <name><![CDATA[zhen9ao]]></name>
+    <email><![CDATA[zhen9ao@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[路由器上使用Cisco IPSec连接网络]]></title>
+    <link href="http://zhen9ao.github.io/blog/2012/12/13/lu-you-qi-shang-shi-yong-cisco-ipseclian-jie-wang-luo/"/>
+    <updated>2012-12-13T21:30:00+08:00</updated>
+    <id>http://zhen9ao.github.io/blog/2012/12/13/lu-you-qi-shang-shi-yong-cisco-ipseclian-jie-wang-luo</id>
+    <content type="html"><![CDATA[<h2>安装<code>vpnc</code></h2>
+
+<p>连接<code>IPSec</code>需要用到<code>vpnc</code>这个包，通过<code>opkg</code>进行安装。</p>
+
+<h2>配置<code>vpnc</code></h2>
+
+<p>在<code>/etc/vpnc/</code>目录下创建配置文件，内容如下：</p>
+
+<pre><code>IPSec gateway server-address
+IPSec ID group-name 
+IPSec secret psk-secret
+Xauth username vpn-username
+Xauth password vpn-password
+NAT Traversal Mode cisco-udp
+</code></pre>
+
+<p>然后运行命令即可启动ipsec了，也创建了一个<code>tun</code>的网络设备</p>
+
+<pre><code>vpn /etc/vpnc/your-config
+</code></pre>
+
+<h2>完善</h2>
+
+<p>虽然已经创建了<code>tun</code>的设备，但是会发现有些网页可以打开，有些则不行，丢包的情况非常严重，这是因为<code>vpnc</code>创建的这个网络设备的<code>mtu</code>值是<code>1412</code>，而不是一般的<code>1500</code>，所以利用<code>iptables</code>对数据包进行整形。</p>
+
+<p>在<code>/etc/firewall.user</code>中添加如下内容：</p>
+
+<pre><code>iptables -t mangle -I FORWARD -o tun+ -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
+iptables -t mangle -I FORWARD -i tun+ -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
+iptables -t mangle -A OUTPUT -o tun+ -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
+iptables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
+</code></pre>
+
+<p>重启firewall后网站就能正常打开了。</p>
+
+<h2>路由表</h2>
+
+<p>与OpenVPN相同，最好也配置一下路由表，让国内IP不走tun设备，可以依然使用之前的<code>chnroute</code>生成的<code>vpnup.sh</code>文件，但是要进行一点点修改。把<code>OLDGW</code>手动进行设置为上级路由器的网关，如我的上级路由器的网关是<code>192.168.1.1</code>，则设置：</p>
+
+<pre><code>OLDGW=192.168.1.1
+</code></pre>
+
+<p>即可。</p>
+
+<p>启动好vpnc后，运行一下vpnup.sh，就配置好国内路由了。</p>
+]]></content>
+  </entry>
+  
+</feed>

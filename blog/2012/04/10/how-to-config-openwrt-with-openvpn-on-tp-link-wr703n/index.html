@@ -1,0 +1,674 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>在TP-Link上安装OpenWrt并配置OpenVPN - Jack's Blog</title>
+  <meta name="author" content="zhen9ao">
+
+  
+  <meta name="description" content="路由器的选择 要安装OpenWrt，首先要选择一款适合的路由器。可以在OpenWrt的官网中查看支持的设备列表，从中选择可以使用的设备。最好选择带USB口的设备（这样可以接U盘，把需要的软件装到U盘中，比如OpenVPN和Python等组件），一般带USB口的设备都是3G路由器或比较高端的路由器， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://zhen9ao.github.io/blog/2012/04/10/how-to-config-openwrt-with-openvpn-on-tp-link-wr703n">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Jack's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-27179534-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <div id="logo">
+  	<div id="logoLeft">{</div>
+  	<div id="logoText">mob</div>
+  	<div id="logoRight">}</div>
+  	<div class="clear"></div>
+  </div>
+  <h1><a href="/">Jack's Blog</a></h1>
+  
+    <h2>My blogging place</h2>
+  
+  <div class="clear"></div>
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:zhen9ao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">在TP-Link上安装OpenWrt并配置OpenVPN</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-10T10:18:00+08:00" pubdate data-updated="true">Apr 10<span>th</span>, 2012</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>路由器的选择</h2>
+
+<p>要安装OpenWrt，首先要选择一款适合的路由器。可以在OpenWrt的官网中查看支持的<a href="http://wiki.openwrt.org/toh/start">设备列表</a>，从中选择可以使用的设备。最好选择带USB口的设备（这样可以接U盘，把需要的软件装到U盘中，比如OpenVPN和Python等组件），一般带USB口的设备都是3G路由器或比较高端的路由器，从节约成本的角度考虑，最好是选择3G路由器，高端路由器当然更好，有更强大的CPU。</p>
+
+<p>我选择了<a href="http://www.tp-link.cn/pages/product-detail.asp?d=225">TP-Link wr703n</a>，这款路由器小巧，方便携带，但功能不弱。</p>
+
+<h2>准备工作</h2>
+
+<p>这里主要考虑的是wr703n只做爬墙使用，不做PPPoE拨号，所以需要准备的东西如下：</p>
+
+<ol>
+<li>网线</li>
+<li>U盘（或TF卡+读卡器等）</li>
+</ol>
+
+
+<!--more-->
+
+
+<h2>刷入固件</h2>
+
+<ul>
+<li>下载对应的ROM文件，wr703n的文件在<a href="http://downloads.openwrt.org/attitude_adjustment/12.09-rc1/ar71xx/generic/">这里</a>，这是rc1的代码库。</li>
+<li>ROM分两种，分别以factory和sysupgrade固件，以factory结束的用来从官方固件刷OpenWrt，以sysupgrade结束的固件是用来更新已有的OpenWrt。所以，新买的路由器应该选择对应的factory固件。</li>
+</ul>
+
+
+<h3>从官方固件升级</h3>
+
+<p>从官方固件升级比较简单，登入TP-Link的Web管理界面，在<code>软件升级</code>中选择本地的<code>openwrt-ar71xx-generic-tl-wr703n-v1-squashfs-factory.bin</code>文件，就可以刷入OpenWrt了。</p>
+
+<h3>从OpenWrt升级</h3>
+
+<p>从已刷过的固件升级稍微麻烦一些，步骤主要可以参考OpenWrt的<a href="http://wiki.openwrt.org/toh/tp-link/tl-wr703n">官方文档</a>，大致如下：</p>
+
+<ol>
+<li>将固件<code>openwrt-ar71xx-generic-tl-wr703n-v1-squashfs-sysupgrade.bin</code>上传到OpenWrt的<code>/tmp</code>目录中</li>
+<li>登入OpenWrt管理界面，执行下面的命令
+
+<blockquote><p>mtd write openwrt-ar71xx-generic-tl-wr703n-v1-squashfs-sysupgrade.bin firmware</p></blockquote></li>
+<li>等待命令行返回后，重启路由器就完成了刷新。</li>
+</ol>
+
+
+<h2>网络配置</h2>
+
+<p>默认情况下，刚刷入的OpenWrt是没有开启wifi的，所以只能由网线连结到路由器，刚刷入的路由器是没有配置root密码的，也没开启ssh，只能用telnet登陆路由器</p>
+
+<blockquote><p>telnet 192.168.1.1</p></blockquote>
+
+<p>不需要输入密码即可登陆，如需要配置ssh，只需要修改root密码，ssh启用后，telnet将自动失效</p>
+
+<blockquote><p>passwd root</p></blockquote>
+
+<p>OpenWrt需要配置的文件主要有以下几个：</p>
+
+<ul>
+<li><code>/etc/config/network</code>  配置网络</li>
+<li><code>/etc/config/wireless</code>  配置无线属性</li>
+<li><code>/etc/config/dhcp</code>  配置dhcp等信息</li>
+<li><code>/etc/config/fstab</code>  配置USB设备自动挂载</li>
+<li><code>/etc/config/firewall</code> 配置防火墙设置</li>
+</ul>
+
+
+<h3><code>/etc/config/network</code></h3>
+
+<p>配置如下</p>
+
+<pre><code>config interface 'loopback'
+    option ifname 'lo'
+    option proto 'static'
+    option ipaddr '127.0.0.1'
+    option netmask '255.0.0.0'
+
+config interface 'wifi'
+    option proto 'static'
+    option ipaddr '192.168.2.1'
+    option netmask '255.255.255.0'
+
+config interface 'wan'
+    option proto 'dhcp'
+    option ifname 'eth0'
+</code></pre>
+
+<p>这个配置中<code>wan</code>即为与上级路由器屋里相连的网卡接口，动态分配IP地址；<code>lan</code>即为无线wifi，IP地址段设置为192.168.2.0/24。</p>
+
+<h3><code>/etc/config/wireless</code></h3>
+
+<pre><code>config wifi-device  radio0
+    option type     mac80211
+    option channel  11
+    option macaddr  14:e6:e4:e7:dc:00
+    option hwmode   11ng
+    option htmode   HT20
+    list ht_capab   SHORT-GI-20
+    list ht_capab   SHORT-GI-40
+    list ht_capab   RX-STBC1
+    list ht_capab   DSSS_CCK-40
+    # REMOVE THIS LINE TO ENABLE WIFI:
+    #option disabled 1
+
+config wifi-iface
+    option device   radio0
+    option network  wifi
+    option mode     ap
+    option ssid     yourssid
+    option encryption psk2
+    option key yourpassword
+</code></pre>
+
+<p>按配置文件中的提示，将<code>option disabled 1</code>注释掉即可启动wifi。将<code>yourssid</code>和<code>yourpassword</code>替换为需要设置的ssid和wifi密码，这个密码有最少8个字符长度要求。</p>
+
+<h3><code>/etc/config/dhcp</code></h3>
+
+<p>这个文件改动很少，可以配置dnsmasq的<code>resolvfile</code>，即DNS。可以新建一个文件<code>/etc/resolv-gpd.conf</code>，其中的内容如下(这里用的是成都电信的dns，选择自己地区的dns作为备用dns，这样访问国内网络速度要快些)</p>
+
+<pre><code>nameserver 8.8.8.8
+nameserver 8.8.4.4
+nameserver 199.91.73.222
+</code></pre>
+
+<p>然后将<code>/etc/config/dhcp</code>中的<code>option resolvfile</code>选项修改为<code>/etc/resolv-gpd.conf</code>，并且配置<code>wan</code>口的dhcp，我的配置如下：</p>
+
+<pre><code>config dnsmasq
+    option domainneeded '1'
+    option boguspriv '1'
+    option localise_queries '1'
+    option rebind_protection '1'
+    option rebind_localhost '1'
+    option local '/lan/'
+    option domain 'lan'
+    option expandhosts '1'
+    option authoritative '1'
+    option readethers '1'
+    option leasefile '/tmp/dhcp.leases'
+    option resolvfile '/etc/resolv-gpd.conf'
+    option nohosts '1'
+    option nonegcache '1'
+    option strictorder '1'
+
+config dhcp 'wifi'
+    option interface 'wifi'
+    option start '100'
+    option limit '150'
+    option leasetime '12h'
+</code></pre>
+
+<h2>防火墙配置(iptables)</h2>
+
+<p>修改<code>/etc/firewall.user</code>文件，配置如下：</p>
+
+<pre><code>iptables -I FORWARD -o tun0 -j ACCEPT
+iptables -t nat -A POSTROUTING -s 192.168.2.0/24 -j MASQUERADE
+</code></pre>
+
+<h2>防火墙配置(<code>/etc/config/firewall</code>)</h2>
+
+<p>把该文件中的<code>lan</code>都改为<code>wifi</code>即可。</p>
+
+<h2>USB配置</h2>
+
+<p>wr703n只有4MB的闪存，装完OpenWrt以后，只剩&#8211;1.4Mb&#8211;的(现在rom自带了luci，所以刷好后的可用空间只有900多Kb了)可用空间了，这些空间只够装一些必备的工具，OpenVPN等一些软件就需要装载外挂的USB设备中了</p>
+
+<h3>安装必备软件</h3>
+
+<ol>
+<li><code>kmod-usb-storage</code>, <code>block-mount</code>  用来挂载usb设备</li>
+<li><code>kmod-fs-ext4</code>  用来启用对文件系统的支持</li>
+<li><strong><code>kmod-tun</code></strong> 虽然会随<code>openvpn</code>一起自动安装，但是将kmod-tun自动装在usb中可能会导致启动openvpn的时候提示tun设备无法找到的错误，所以在这里也将它先装到闪存中</li>
+<li><code>ldconfig</code>  使得安装在USB中的lib能被找到</li>
+</ol>
+
+
+<blockquote><p>  opkg update
+  opkg install [package name]</p></blockquote>
+
+<p>将<code>[package name]</code>替换为包名，可以连续键入多个包名，以空格隔开</p>
+
+<h3>配置USB设备</h3>
+
+<p>可以先找一台Ubuntu机器或者在Mac上先将U盘分区、格式化成FAT格式，但是在Mac中创建分区时最好创建成Windows格式的分区表，如果创建成GUID格式的话，可能会多处一个分区，导致U盘的可用空间分区名会变成<code>sda2</code></p>
+
+<p>在Mac上分区格式化成功后，就可以将U盘接到路由器上，对其进行格式化，使其成为ext4格式</p>
+
+<pre><code>mkfs.ext4 -j /dev/sda1
+</code></pre>
+
+<p>等待结束后，就可以将U盘挂载到路由器上了</p>
+
+<pre><code>mkdir /mnt/usb
+mount /dev/sda1 /mnt/usb
+</code></pre>
+
+<p>这时候就可以查看到已有设备中已经挂载了<code>/dev/sda1</code></p>
+
+<pre><code>df -h
+</code></pre>
+
+<p>成功mount后，可以修改<code>/etc/config/fstab</code>，让USB设备在路由器启动时自动挂载</p>
+
+<pre><code>config mount
+    option uuid 033ab6ac-22ef-40c1-8a31-2dd61de49302
+    option target /mnt/usb
+    option device /dev/sda1
+    option fstype ext4
+    option options  rw,sync
+    option enabled  1
+    option enabled_fsck 0
+</code></pre>
+
+<p>其中的<code>uuid</code>可以由<code>blkid</code>命令查到，最后要启动fatab服务</p>
+
+<pre><code>/etc/init.d/fstab enable
+/etc/init.d/fstab start
+</code></pre>
+
+<p>这样就完成了USB设备的配置</p>
+
+<h2>安装OpenVPN</h2>
+
+<p>要在usb设备中安装软件需要在<code>/etc/opkg.conf</code>中添加<code>dest usb /mnt/usb</code>，之后执行一下命令</p>
+
+<pre><code>opkg -dest usb install openvpn
+</code></pre>
+
+<p>安装安成后，可以在<code>/etc/profile</code>系统路径中加入openvpn的路径</p>
+
+<p>接下来要配置ldconfig，比较简单，创建文件<code>/etc/ld.so.conf</code>，在其中写入需要载入的lib文件路径即可，然后键入命令，启用配置</p>
+
+<pre><code>ldconfig
+</code></pre>
+
+<p>最后，上传OpenVPN配置文件，启动OpenVPN，就可以实现在路由器上自由爬墙了～</p>
+
+<h2>后记</h2>
+
+<ul>
+<li>可以配合使用chnroute，减少openvpn的流量消耗</li>
+<li>本文大部分内容都是源于这两个博客，感谢这两个博主的文章：<a href="http://blog.proadm.net/blog/2011/10/25/Building-a-GFWless-AP-on-WR703n/">Lei Yang&#8217;s Geek Life</a> 和 <a href="http://www.ratazzi.org/2012/02/09/install-openvpn-and-openwrt-on-wr703n/">Ratazzis&#8217;s Blog</a></li>
+</ul>
+
+
+<h2>PS:</h2>
+
+<p>首先将openvpn的默认配置文件复制到<code>/etc/config</code>中</p>
+
+<pre><code>cp /mnt/usb/etc/config/openvpn /etc/config/
+</code></pre>
+
+<p>修改默认配置文件中的第一个配置</p>
+
+<pre><code>config openvpn custom_config
+
+    # Set to 1 to enable this instance:
+    option enabled 1
+
+    # Include OpenVPN configuration
+    option config /mnt/usb/vpn/config.ovpn
+</code></pre>
+
+<p>主要将<code>enable</code>设置为<code>1</code>，配置文件指向自己的ovpn文件。</p>
+
+<p>然后将启动脚本复制到<code>/etc/init.d/</code>中</p>
+
+<pre><code>cp /mnt/usb/etc/init.d/openvpn /etc/init.d/
+</code></pre>
+
+<p>修改启动脚本中的openvpn二进制文件位置，改成/mnt/usb/开头的位置。</p>
+
+<p>最后：</p>
+
+<pre><code>/etc/init.d/openvpn enable
+</code></pre>
+
+<p>这样就配置好了openvpn和自动启动</p>
+
+<h2>PPS:</h2>
+
+<p>OpenVPN配置文件</p>
+
+<p>首先，使用<a href="http://code.google.com/p/chnroutes/wiki/Usage">chnroute</a>配置openvpn，让访问国内网络不走vpn的链路。</p>
+
+<p>使用chnroute的android配置文件即可</p>
+
+<pre><code>python chnroute.py -p android
+</code></pre>
+
+<p>这样得到了<code>vpnup.sh</code>和<code>vpndown.sh</code>文件，并且把下载下来的文件中前面的<code>alias</code>内容注释掉，因为在openwrt中不需要这些配置，会导致openvpn启动错误。</p>
+
+<p>将这两个文件上传到路由器的目录中，并将文件增加执行权限</p>
+
+<pre><code>chmod a+x vpnup.sh &amp;&amp; chmod a+x vpndown.sh
+</code></pre>
+
+<p>接下来是openvpn的config文件，大致配置如下：</p>
+
+<pre><code>remote yourhost port
+client
+dev tun
+proto tcp
+daemon
+resolv-retry infinite
+nobind
+persist-key
+persist-tun
+ca ca文件绝对路径
+cert crt文件绝对路径
+key key文件绝对路径
+ns-cert-type server
+comp-lzo
+route-delay 2
+route-method exe
+verb 3
+script-security 2
+up vpnup.sh文件绝对路径
+down vpndown.sh文件绝对路径
+log /tmp/openvpn.log
+</code></pre>
+
+<p>这样，重启后就搞定了。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">zhen9ao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-10T10:18:00+08:00" pubdate data-updated="true">Apr 10<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/openvpn/'>OpenVPN</a>, <a class='category' href='/blog/categories/openwrt/'>OpenWrt</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://zhen9ao.github.io/blog/2012/04/10/how-to-config-openwrt-with-openvpn-on-tp-link-wr703n/" data-via="zhen9ao" data-counturl="http://zhen9ao.github.io/blog/2012/04/10/how-to-config-openwrt-with-openvpn-on-tp-link-wr703n/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2011/11/20/shi-yong-mavebian-yi-androidxiang-mu/" title="Previous Post: 使用mave编译Android项目">&laquo; 使用mave编译Android项目</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/04/20/resolve-xcode-4-dot-3-2-organizer-crash/" title="Next Post: 解决Xcode4.3.2打开Organizer中的devices就崩溃的问题">解决Xcode4.3.2打开Organizer中的devices就崩溃的问题 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Categories</h1>
+  <ul id="categories">
+    <li class='category'><a href='/blog/categories/android/'>Android (1)</a></li>
+<li class='category'><a href='/blog/categories/bt/'>BT (1)</a></li>
+<li class='category'><a href='/blog/categories/daily/'>Daily (1)</a></li>
+<li class='category'><a href='/blog/categories/ipsec/'>IPSec (1)</a></li>
+<li class='category'><a href='/blog/categories/openvpn/'>OpenVPN (2)</a></li>
+<li class='category'><a href='/blog/categories/openwrt/'>OpenWrt (4)</a></li>
+<li class='category'><a href='/blog/categories/virtualbox/'>VirtualBox (1)</a></li>
+<li class='category'><a href='/blog/categories/xcode/'>Xcode (1)</a></li>
+<li class='category'><a href='/blog/categories/java/'>java (1)</a></li>
+<li class='category'><a href='/blog/categories/maven/'>maven (2)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/12/13/lu-you-qi-shang-shi-yong-cisco-ipseclian-jie-wang-luo/">路由器上使用Cisco IPSec连接网络</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/12/06/openwrtde-dnspei-zhi/">OpenWrt的DNS配置</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/11/19/openwrttuo-ji-xia-zai/">OpenWrt脱机下载</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/10/11/what-did-i-do-today/">今天都折腾了些什么</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/08/06/setup-android-x86-in-virtualbox/">在VirtualBox中配置Android-x86</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/zhen9ao">@zhen9ao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'zhen9ao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("zhen9ao", 5, true);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/zhen9ao" class="twitter-follow-button" data-show-count="true">Follow @zhen9ao</a>
+  
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/108753779288616834499?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - zhen9ao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'zhen9ao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://zhen9ao.github.io/blog/2012/04/10/how-to-config-openwrt-with-openvpn-on-tp-link-wr703n/';
+        var disqus_url = 'http://zhen9ao.github.io/blog/2012/04/10/how-to-config-openwrt-with-openvpn-on-tp-link-wr703n/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

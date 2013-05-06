@@ -1,0 +1,502 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>OpenWrt脱机下载 - Jack's Blog</title>
+  <meta name="author" content="zhen9ao">
+
+  
+  <meta name="description" content="一般为了实现脱机下载，可能会考虑搭建一个自用的NAS系统，不过这样的一个系统一般要准备一个小机箱之类的PC来搭建。考虑到耗电和成本的因素，加上OpenWrt很好很强大，所以完全没必要为了脱机下载专门配个Atom芯片的PC，一个路由器足以搞定。 准备 一个可以刷OpenWrt的路由器（ &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://zhen9ao.github.io/blog/2012/11/19/openwrttuo-ji-xia-zai">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Jack's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-27179534-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <div id="logo">
+  	<div id="logoLeft">{</div>
+  	<div id="logoText">mob</div>
+  	<div id="logoRight">}</div>
+  	<div class="clear"></div>
+  </div>
+  <h1><a href="/">Jack's Blog</a></h1>
+  
+    <h2>My blogging place</h2>
+  
+  <div class="clear"></div>
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:zhen9ao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">OpenWrt脱机下载</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-19T12:31:00+08:00" pubdate data-updated="true">Nov 19<span>th</span>, 2012</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>一般为了实现脱机下载，可能会考虑搭建一个自用的NAS系统，不过这样的一个系统一般要准备一个小机箱之类的PC来搭建。考虑到耗电和成本的因素，加上OpenWrt很好很强大，所以完全没必要为了脱机下载专门配个Atom芯片的PC，一个路由器足以搞定。</p>
+
+<h3>准备</h3>
+
+<p>一个可以刷OpenWrt的路由器（我用的wr703n），一个大U盘（现在U盘都非常便宜，100多就可以买一个32G的），一个Linux虚拟机或者物理机。</p>
+
+<h2>配置OpenWrt</h2>
+
+<p>刷好OpenWrt之后，只需要先把网络、无线先配置好，然后通过wifi连接路由器。</p>
+
+<h3>让路由器从U盘引导启动</h3>
+
+<p>这么做，有几个好处：</p>
+
+<ol>
+<li>使用<code>opkg</code>安装的东西就默认在U盘了，需要装什么就可以尽情的装。</li>
+<li>如果以后再对路由器修改配置导致路由器变砖或者无法启动，拔掉U盘就可以从路由器的存储启动了，不用重新刷机。</li>
+</ol>
+
+
+<!--more-->
+
+
+<p>可以参考这里的官方文档： <a href="http://wiki.openwrt.org/doc/howto/extroot">点我</a></p>
+
+<p>需要安装几个包： <code>kmod-usb-storage</code>、<code>block-mount</code>、<code>kmod-fs-ext4</code>。</p>
+
+<p>U盘要在Linux系统中先格式化成<code>ext4</code>的文件系统。</p>
+
+<p>修改<code>/etc/config/fstab</code>：</p>
+
+<pre><code>config mount
+    option target           /overlay
+    option device           /dev/sda1
+    option fstype           ext4
+    option options          rw,sync
+    option enabled          1
+    option enabled_fsck     0
+config swap
+    option device   /dev/sda2
+    option enabled  1
+</code></pre>
+
+<p>运行命令，使<code>fstab</code>开机自动启动：</p>
+
+<pre><code>/etc/init.d/fstable enable
+/etc/init.d/fstable start
+</code></pre>
+
+<p>创建可以被OpenWrt引导的U盘：</p>
+
+<pre><code>mkdir /tmp/sda1
+mkdir /tmp/root
+mount /dev/sda1 /tmp/sda1
+mount -o bind / /tmp/root
+cp -a /tmp/root/* /tmp/sda1
+</code></pre>
+
+<p>这时重启以后，路由器就从U盘引导启动了！</p>
+
+<h3>安装配置<code>transmission</code></h3>
+
+<p>安装了transmission的bt客户端，</p>
+
+<pre><code>opkg update &amp;&amp; opkg install transmission-web
+</code></pre>
+
+<p>修改transmission的配置<code>/etc/conifg/transmission</code>，需要修改的项如下：</p>
+
+<pre><code>option enable 1
+
+option config_dir '/mnt/usb/bt' 
+option download_dir '/mnt/usb/bt/done'
+
+option rpc_authentication_required true
+option rpc_bind_address '0.0.0.0'
+option rpc_enabled true
+option rpc_password 'yourpassword'
+option rpc_port 9091
+option rpc_username 'user'
+option rpc_whitelist '127.0.0.1,192.168.1.*'
+option rpc_whitelist_enabled false
+</code></pre>
+
+<p>然后启动transmission的自动启动脚本：</p>
+
+<pre><code>/etc/init.d/transmission enable
+/etc/init.d/transmission start
+</code></pre>
+
+<p>这样，通过浏览器访问路由器的<code>9091</code>端口就可以访问网页控制界面了，通过这个界面就可以上传种子文件。</p>
+
+<h3>安装配置<code>samba</code></h3>
+
+<p>有了samba服务，就可以实用finder或者资源管理器访问路由器的目录了，不用每次都用scp那么麻烦。</p>
+
+<p>安装：</p>
+
+<pre><code>opkg install samba36-server
+</code></pre>
+
+<p>要先创建samba用户并设置密码：</p>
+
+<pre><code>smbpasswd -a root
+</code></pre>
+
+<p>修改<code>/etc/config/samba</code>，在文件后面添加一个共享目录：</p>
+
+<pre><code>config sambashare
+    option 'name'           'root'
+    option 'path'           '/'
+    option 'read_only'      'no'
+    option 'guest_ok'       'no'
+    option 'create_mask'    '0700'
+    option 'dir_mask'       '0700'
+</code></pre>
+
+<p>修改<code>/etc/samba/smb.conf.templet</code>模板文件，需要修改的内容：</p>
+
+<pre><code>unix charset = utf-8
+#invalid users = root
+</code></pre>
+
+<p>启用服务：</p>
+
+<pre><code>/etc/init.d/samba enable
+/etc/init.d/samba start 
+</code></pre>
+
+<p>这样，一个能进行脱机下载的OpenWrt路由器就配置好了！</p>
+
+<p>PS: 如果路由器同时也配置了openvpn服务，最好在下载的时候关闭openvpn，这样也防止vpn账号被警告。</p>
+
+<p>PPS: bt下载很费内存，所以建立一个swapfile来当做swap可以让bt下载比较稳定。</p>
+
+<pre><code>＃在/下创建一个64M的交换文件，时间较长
+dd if=/dev/zero of=/swapfile bs=1024 count=62142
+
+mkswap /swapfile
+
+swapon /swapfile
+</code></pre>
+
+<p>然后修改<code>/etc/config/fstab</code>使得swap开机自动加载</p>
+
+<pre><code>config swap
+    option device /swapfile
+    option enabled 1
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">zhen9ao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-19T12:31:00+08:00" pubdate data-updated="true">Nov 19<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/bt/'>BT</a>, <a class='category' href='/blog/categories/openwrt/'>OpenWrt</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://zhen9ao.github.io/blog/2012/11/19/openwrttuo-ji-xia-zai/" data-via="zhen9ao" data-counturl="http://zhen9ao.github.io/blog/2012/11/19/openwrttuo-ji-xia-zai/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/10/11/what-did-i-do-today/" title="Previous Post: 今天都折腾了些什么">&laquo; 今天都折腾了些什么</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/12/06/openwrtde-dnspei-zhi/" title="Next Post: OpenWrt的DNS配置">OpenWrt的DNS配置 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Categories</h1>
+  <ul id="categories">
+    <li class='category'><a href='/blog/categories/android/'>Android (1)</a></li>
+<li class='category'><a href='/blog/categories/bt/'>BT (1)</a></li>
+<li class='category'><a href='/blog/categories/daily/'>Daily (1)</a></li>
+<li class='category'><a href='/blog/categories/ipsec/'>IPSec (1)</a></li>
+<li class='category'><a href='/blog/categories/openvpn/'>OpenVPN (2)</a></li>
+<li class='category'><a href='/blog/categories/openwrt/'>OpenWrt (4)</a></li>
+<li class='category'><a href='/blog/categories/virtualbox/'>VirtualBox (1)</a></li>
+<li class='category'><a href='/blog/categories/xcode/'>Xcode (1)</a></li>
+<li class='category'><a href='/blog/categories/java/'>java (1)</a></li>
+<li class='category'><a href='/blog/categories/maven/'>maven (2)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/12/13/lu-you-qi-shang-shi-yong-cisco-ipseclian-jie-wang-luo/">路由器上使用Cisco IPSec连接网络</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/12/06/openwrtde-dnspei-zhi/">OpenWrt的DNS配置</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/11/19/openwrttuo-ji-xia-zai/">OpenWrt脱机下载</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/10/11/what-did-i-do-today/">今天都折腾了些什么</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/08/06/setup-android-x86-in-virtualbox/">在VirtualBox中配置Android-x86</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/zhen9ao">@zhen9ao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'zhen9ao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("zhen9ao", 5, true);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/zhen9ao" class="twitter-follow-button" data-show-count="true">Follow @zhen9ao</a>
+  
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/108753779288616834499?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - zhen9ao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'zhen9ao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://zhen9ao.github.io/blog/2012/11/19/openwrttuo-ji-xia-zai/';
+        var disqus_url = 'http://zhen9ao.github.io/blog/2012/11/19/openwrttuo-ji-xia-zai/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

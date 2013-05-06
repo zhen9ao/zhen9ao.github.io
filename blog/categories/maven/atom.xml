@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: maven | Jack's Blog]]></title>
+  <link href="http://zhen9ao.github.io/blog/categories/maven/atom.xml" rel="self"/>
+  <link href="http://zhen9ao.github.io/"/>
+  <updated>2013-05-06T17:40:44+08:00</updated>
+  <id>http://zhen9ao.github.io/</id>
+  <author>
+    <name><![CDATA[zhen9ao]]></name>
+    <email><![CDATA[zhen9ao@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[IntelliJ IDEA中手动强制更新Maven Dependencies]]></title>
+    <link href="http://zhen9ao.github.io/blog/2012/04/26/refresh-maven-dependency-manually-in-intellij-idea/"/>
+    <updated>2012-04-26T12:01:00+08:00</updated>
+    <id>http://zhen9ao.github.io/blog/2012/04/26/refresh-maven-dependency-manually-in-intellij-idea</id>
+    <content type="html"><![CDATA[<p>Intellj IDEA 的自动载入Mave依赖的功能虽然好用，但有时候依赖多了或者缓存出问题，就会导致修改pom文件却没有触发自动重新载入的动作，这个时候就需要手动强制让Intellj IDEA更新依赖了。主要需要以下两步：</p>
+
+<ol>
+<li>手动删除<code>Project Settings</code>里面的<code>Libraries</code>内容</li>
+<li><code>mvn clean</code>删除之前编译过的文件</li>
+<li><code>Reimport all maven projects</code></li>
+</ol>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[使用mave编译Android项目]]></title>
+    <link href="http://zhen9ao.github.io/blog/2011/11/20/shi-yong-mavebian-yi-androidxiang-mu/"/>
+    <updated>2011-11-20T17:10:00+08:00</updated>
+    <id>http://zhen9ao.github.io/blog/2011/11/20/shi-yong-mavebian-yi-androidxiang-mu</id>
+    <content type="html"><![CDATA[<h2>为何打算使用Maven</h2>
+
+<ol>
+<li><p>maven可以让目录更加简洁和清晰</p></li>
+<li><p>利用maven，不用手动下载依赖的各种jar文件，可以减小源码大小，所需的依赖库都又maven自动处理。</p></li>
+<li><p>主要使用了开源的maven-android-plugin（3.0版本改名为<a href="http://code.google.com/p/maven-android-plugin/wiki/PluginRenamed">android-maven-plugin</a>）插件</p></li>
+</ol>
+
+
+<p>本文主要介绍在Mac OS X下使用maven进行android编译需要的做的工作。</p>
+
+<!--more-->
+
+
+<h2>开始折腾</h2>
+
+<ol>
+<li>安装maven</li>
+</ol>
+
+
+<p>我使用的是Homebrew，执行以下命令：</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>brew install maven</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<ol>
+<li>配置系统环境</li>
+</ol>
+
+
+<p>主要需要配置的是ANDROID_HOME这个环境变量，在我这里配置如下：</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>export ANDROID_HOME=/Users/zheng/Documents/Android/android-sdk-mac_x86</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>可以将环境变量写到.bash_profile（如果使用bash）或者.zshrc（如果使用zsh）中。</p>
+
+<ol>
+<li>下载例子程序</li>
+</ol>
+
+
+<p>在官方的<a href="http://code.google.com/p/maven-android-plugin/wiki/Samples">wiki页面</a>可以下载例子程序，我选择了3.0.0-alpha版的，看了一下，差别不是特别大，主要是集成了一些新的命令。</p>
+
+<ol>
+<li>编辑例子程序</li>
+</ol>
+
+
+<p>主要需要编辑的是pom.xml文件，也是maven的核心文件。</p>
+
+<p>本文件展示的是修改后的helloflashlight文件夹下的pom.xml文件</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>pom.xml </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="ni">&amp;lt;</span>?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+</span><span class='line'><span class="nt">&lt;project</span> <span class="na">xmlns=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span> <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd&quot;</span><span class="nt">&gt;&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span><span class="ni">&amp;lt;</span>modelVersion<span class="ni">&amp;gt;</span>4.0.0<span class="ni">&amp;lt;</span>/modelVersion<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>groupId<span class="ni">&amp;gt;</span>com.simpligility.android<span class="ni">&amp;lt;</span>/groupId<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>artifactId<span class="ni">&amp;gt;</span>helloflashlight<span class="ni">&amp;lt;</span>/artifactId<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>version<span class="ni">&amp;gt;</span>1.0.0-SNAPSHOT<span class="ni">&amp;lt;</span>/version<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>packaging<span class="ni">&amp;gt;</span>apk<span class="ni">&amp;lt;</span>/packaging<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>name<span class="ni">&amp;gt;</span>HelloFlashlight<span class="ni">&amp;lt;</span>/name<span class="ni">&amp;gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="ni">&amp;lt;</span>dependencies<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>dependency<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>groupId<span class="ni">&amp;gt;</span>com.google.android<span class="ni">&amp;lt;</span>/groupId<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>artifactId<span class="ni">&amp;gt;</span>android<span class="ni">&amp;lt;</span>/artifactId<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>version<span class="ni">&amp;gt;</span>2.3.3<span class="ni">&amp;lt;</span>/version<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>scope<span class="ni">&amp;gt;</span>provided<span class="ni">&amp;lt;</span>/scope<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>/dependency<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>dependency<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>groupId<span class="ni">&amp;gt;</span>xom<span class="ni">&amp;lt;</span>/groupId<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>artifactId<span class="ni">&amp;gt;</span>xom<span class="ni">&amp;lt;</span>/artifactId<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>version<span class="ni">&amp;gt;</span>1.2.5<span class="ni">&amp;lt;</span>/version<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>/dependency<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>dependency<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>groupId<span class="ni">&amp;gt;</span>xom<span class="ni">&amp;lt;</span>/groupId<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>artifactId<span class="ni">&amp;gt;</span>xom<span class="ni">&amp;lt;</span>/artifactId<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>version<span class="ni">&amp;gt;</span>1.2.5<span class="ni">&amp;lt;</span>/version<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>exclusions<span class="ni">&amp;gt;</span>
+</span><span class='line'>            <span class="ni">&amp;lt;</span>exclusion<span class="ni">&amp;gt;</span>
+</span><span class='line'>                <span class="ni">&amp;lt;</span>groupId<span class="ni">&amp;gt;</span>xml-apis<span class="ni">&amp;lt;</span>/groupId<span class="ni">&amp;gt;</span>
+</span><span class='line'>                <span class="ni">&amp;lt;</span>artifactId<span class="ni">&amp;gt;</span>xml-apis<span class="ni">&amp;lt;</span>/artifactId<span class="ni">&amp;gt;</span>
+</span><span class='line'>            <span class="ni">&amp;lt;</span>/exclusion<span class="ni">&amp;gt;</span>
+</span><span class='line'>            <span class="ni">&amp;lt;</span>exclusion<span class="ni">&amp;gt;</span>
+</span><span class='line'>                <span class="ni">&amp;lt;</span>groupId<span class="ni">&amp;gt;</span>xerces<span class="ni">&amp;lt;</span>/groupId<span class="ni">&amp;gt;</span>
+</span><span class='line'>                <span class="ni">&amp;lt;</span>artifactId<span class="ni">&amp;gt;</span>xercesImpl<span class="ni">&amp;lt;</span>/artifactId<span class="ni">&amp;gt;</span>
+</span><span class='line'>            <span class="ni">&amp;lt;</span>/exclusion<span class="ni">&amp;gt;</span>
+</span><span class='line'>            <span class="ni">&amp;lt;</span>exclusion<span class="ni">&amp;gt;</span>
+</span><span class='line'>                <span class="ni">&amp;lt;</span>groupId<span class="ni">&amp;gt;</span>xalan<span class="ni">&amp;lt;</span>/groupId<span class="ni">&amp;gt;</span>
+</span><span class='line'>                <span class="ni">&amp;lt;</span>artifactId<span class="ni">&amp;gt;</span>xalan<span class="ni">&amp;lt;</span>/artifactId<span class="ni">&amp;gt;</span>
+</span><span class='line'>            <span class="ni">&amp;lt;</span>/exclusion<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>/exclusions<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>/dependency<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>dependency<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>groupId<span class="ni">&amp;gt;</span>com.caacsri.mobile<span class="ni">&amp;lt;</span>/groupId<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>artifactId<span class="ni">&amp;gt;</span>mobile-client<span class="ni">&amp;lt;</span>/artifactId<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>version<span class="ni">&amp;gt;</span>1.0-SNAPSHOT<span class="ni">&amp;lt;</span>/version<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>/dependency<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>/dependencies<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>build<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>finalName<span class="ni">&amp;gt;</span>${project.artifactId}<span class="ni">&amp;lt;</span>/finalName<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>sourceDirectory<span class="ni">&amp;gt;</span>src<span class="ni">&amp;lt;</span>/sourceDirectory<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>pluginManagement<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>plugins<span class="ni">&amp;gt;</span>
+</span><span class='line'>            <span class="ni">&amp;lt;</span>plugin<span class="ni">&amp;gt;</span>
+</span><span class='line'>                <span class="ni">&amp;lt;</span>groupId<span class="ni">&amp;gt;</span>com.jayway.maven.plugins.android.generation2<span class="ni">&amp;lt;</span>/groupId<span class="ni">&amp;gt;</span>
+</span><span class='line'>                <span class="ni">&amp;lt;</span>artifactId<span class="ni">&amp;gt;</span>android-maven-plugin<span class="ni">&amp;lt;</span>/artifactId<span class="ni">&amp;gt;</span>
+</span><span class='line'>                <span class="ni">&amp;lt;</span>version<span class="ni">&amp;gt;</span>3.0.0-alpha-14<span class="ni">&amp;lt;</span>/version<span class="ni">&amp;gt;</span>
+</span><span class='line'>                <span class="ni">&amp;lt;</span>extensions<span class="ni">&amp;gt;</span>true<span class="ni">&amp;lt;</span>/extensions<span class="ni">&amp;gt;</span>
+</span><span class='line'>            <span class="ni">&amp;lt;</span>/plugin<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>/plugins<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>/pluginManagement<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>plugins<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>plugin<span class="ni">&amp;gt;</span>
+</span><span class='line'>            <span class="ni">&amp;lt;</span>groupId<span class="ni">&amp;gt;</span>com.jayway.maven.plugins.android.generation2<span class="ni">&amp;lt;</span>/groupId<span class="ni">&amp;gt;</span>
+</span><span class='line'>            <span class="ni">&amp;lt;</span>artifactId<span class="ni">&amp;gt;</span>android-maven-plugin<span class="ni">&amp;lt;</span>/artifactId<span class="ni">&amp;gt;</span>
+</span><span class='line'>            <span class="ni">&amp;lt;</span>configuration<span class="ni">&amp;gt;</span>
+</span><span class='line'>                <span class="ni">&amp;lt;</span>sdk<span class="ni">&amp;gt;</span>
+</span><span class='line'>                    <span class="ni">&amp;lt;</span>path<span class="ni">&amp;gt;</span>/Users/zheng/Documents/Android/android-sdk-mac_x86<span class="ni">&amp;lt;</span>/path<span class="ni">&amp;gt;</span>
+</span><span class='line'>                    <span class="ni">&amp;lt;</span>platform<span class="ni">&amp;gt;</span>10<span class="ni">&amp;lt;</span>/platform<span class="ni">&amp;gt;</span>
+</span><span class='line'>                <span class="ni">&amp;lt;</span>/sdk<span class="ni">&amp;gt;</span>
+</span><span class='line'>            <span class="ni">&amp;lt;</span>/configuration<span class="ni">&amp;gt;</span>
+</span><span class='line'>        <span class="ni">&amp;lt;</span>/plugin<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>/plugins<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>/build<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;p&gt;&lt;/project&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>需要注意的主要是以下几个部分：</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;dependency&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;groupId&gt;</span>com.google.android<span class="nt">&lt;/groupId&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;artifactId&gt;</span>android<span class="nt">&lt;/artifactId&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;version&gt;</span>2.3.3<span class="nt">&lt;/version&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;scope&gt;</span>provided<span class="nt">&lt;/scope&gt;</span>
+</span><span class='line'><span class="nt">&lt;/dependency&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>这里需要将scope设置为provided</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;plugin&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;groupId&gt;</span>com.jayway.maven.plugins.android.generation2<span class="nt">&lt;/groupId&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;artifactId&gt;</span>android-maven-plugin<span class="nt">&lt;/artifactId&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;configuration&gt;&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span> <span class="ni">&amp;lt;</span>sdk<span class="ni">&amp;gt;</span>
+</span><span class='line'> <span class="ni">&amp;lt;</span>path<span class="ni">&amp;gt;</span>/Users/zheng/Documents/Android/android-sdk-mac_x86<span class="ni">&amp;lt;</span>/path<span class="ni">&amp;gt;</span>
+</span><span class='line'> <span class="ni">&amp;lt;</span>platform<span class="ni">&amp;gt;</span>10<span class="ni">&amp;lt;</span>/platform<span class="ni">&amp;gt;</span>
+</span><span class='line'> <span class="ni">&amp;lt;</span>/sdk<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;p&gt;</span>  <span class="nt">&lt;/configuration&gt;</span>
+</span><span class='line'><span class="nt">&lt;/plugin&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>这里需要设置path，指向sdk的安装目录。"10"是对应的"android2.3.3"的版本号</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;dependency&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;groupId&gt;</span>xom<span class="nt">&lt;/groupId&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;artifactId&gt;</span>xom<span class="nt">&lt;/artifactId&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;version&gt;</span>1.2.5<span class="nt">&lt;/version&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;exclusions&gt;&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span><span class="ni">&amp;lt;</span>exclusion<span class="ni">&amp;gt;</span>
+</span><span class='line'>  <span class="ni">&amp;lt;</span>groupId<span class="ni">&amp;gt;</span>xml-apis<span class="ni">&amp;lt;</span>/groupId<span class="ni">&amp;gt;</span>
+</span><span class='line'>  <span class="ni">&amp;lt;</span>artifactId<span class="ni">&amp;gt;</span>xml-apis<span class="ni">&amp;lt;</span>/artifactId<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>/exclusion<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>exclusion<span class="ni">&amp;gt;</span>
+</span><span class='line'>  <span class="ni">&amp;lt;</span>groupId<span class="ni">&amp;gt;</span>xerces<span class="ni">&amp;lt;</span>/groupId<span class="ni">&amp;gt;</span>
+</span><span class='line'>  <span class="ni">&amp;lt;</span>artifactId<span class="ni">&amp;gt;</span>xercesImpl<span class="ni">&amp;lt;</span>/artifactId<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>/exclusion<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>exclusion<span class="ni">&amp;gt;</span>
+</span><span class='line'>  <span class="ni">&amp;lt;</span>groupId<span class="ni">&amp;gt;</span>xalan<span class="ni">&amp;lt;</span>/groupId<span class="ni">&amp;gt;</span>
+</span><span class='line'>  <span class="ni">&amp;lt;</span>artifactId<span class="ni">&amp;gt;</span>xalan<span class="ni">&amp;lt;</span>/artifactId<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>/exclusion<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;p&gt;</span>  <span class="nt">&lt;/exclusions&gt;</span>
+</span><span class='line'><span class="nt">&lt;/dependency&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>使用了第三方的依赖，这里添加了exclusions，因为xom的依赖可能较老或者在较老的jvm虚拟机上编译的原因，所以如果不添加exclusion，可能在在转换成dex文件的时候会报错</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[INFO] Ill-advised or mistaken usage of a core class (java.&lt;em> or javax.&lt;/em>)
+</span><span class='line'>[INFO] when not building a core library.
+</span><span class='line'>[INFO]
+</span><span class='line'>[INFO] This is often due to inadvertently including a core library file
+</span><span class='line'>[INFO] in your application's project, when using an IDE (such as
+</span><span class='line'>[INFO] Eclipse). If you are sure you're not intentionally defining a
+</span><span class='line'>[INFO] core class, then this is the most likely explanation of what's
+</span><span class='line'>[INFO] going on.
+</span><span class='line'>[INFO]
+</span><span class='line'>[INFO] However, you might actually be trying to define a class in a core
+</span><span class='line'>[INFO] namespace, the source of which you may have taken, for example,
+</span><span class='line'>[INFO] from a non-Android virtual machine project. This will most
+</span><span class='line'>[INFO] assuredly not work. At a minimum, it jeopardizes the
+</span><span class='line'>[INFO] compatibility of your app with future versions of the platform.
+</span><span class='line'>[INFO] It is also often of questionable legality.
+</span><span class='line'>[INFO]
+</span><span class='line'>[INFO] If you really intend to build a core library -- which is only
+</span><span class='line'>[INFO] appropriate as part of creating a full virtual machine
+</span><span class='line'>[INFO] distribution, as opposed to compiling an application -- then use
+</span><span class='line'>[INFO] the "--core-library" option to suppress this error message.
+</span><span class='line'>[INFO]
+</span><span class='line'>[INFO] If you go ahead and use "--core-library" but are in fact
+</span><span class='line'>[INFO] building an application, then be forewarned that your application
+</span><span class='line'>[INFO] will still fail to build or run, at some point. Please be
+</span><span class='line'>[INFO] prepared for angry customers who find, for example, that your
+</span><span class='line'>[INFO] application ceases to function once they upgrade their operating
+</span><span class='line'>[INFO] system. You will be to blame for this problem.
+</span><span class='line'>[INFO]
+</span><span class='line'>[INFO] If you are legitimately using some code that happens to be in a
+</span><span class='line'>[INFO] core package, then the easiest safe alternative you have is to
+</span><span class='line'>[INFO] repackage that code. That is, move the classes in question into
+</span><span class='line'>[INFO] your own package namespace. This means that they will never be in
+</span><span class='line'>[INFO] conflict with core system classes. JarJar is a tool that may help
+</span><span class='line'>[INFO] you in this endeavor. If you find that you cannot do this, then
+</span><span class='line'>[INFO] that is an indication that the path you are on will ultimately
+</span><span class='line'>[INFO] lead to pain, suffering, grief, and lamentation.</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>提示中说明可以通过添加"--core-library"参数解决这个问题，具体在pom文件中就是在configuration部分加入如下代码：</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;dex&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;jvmArguments&gt;&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span><span class="ni">&amp;lt;</span>jvmArgument<span class="ni">&amp;gt;</span>-Xms256m<span class="ni">&amp;lt;</span>/jvmArgument<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>jvmArgument<span class="ni">&amp;gt;</span>-Xmx512m<span class="ni">&amp;lt;</span>/jvmArgument<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;p&gt;</span>  <span class="nt">&lt;/jvmArguments&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;coreLibrary&gt;</span>true|false<span class="nt">&lt;/coreLibrary&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;noLocals&gt;</span>true|false<span class="nt">&lt;/noLocals&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;optimize&gt;</span>true|false<span class="nt">&lt;/optimize&gt;</span>
+</span><span class='line'><span class="nt">&lt;/dex&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>这也是除了添加exclusion以外的另一种解决方案，但是经我的测试，这种方案会导致很长时间的build和一大堆提示信息，说明某个类不能被编译什么的，但是最后还是能通过编译，不过我不喜欢用这种方式，还是添加exclusions吧，那种方式的输出结果比较简洁。</p>
+
+<ol>
+<li>编译及运行</li>
+</ol>
+
+
+<p>切换到目录下，编译代码使用命令：</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mvn clean install</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>部署和运行代码使用以下命令：</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mvn android:deploy android:run</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<ol>
+<li>如何创建新项目</li>
+</ol>
+
+
+<p>最后，说一下如何直接创建新项目。按着<a href="https://github.com/akquinet/android-archetypes/wiki">官方wiki</a>里的说法，有三种创建方式"quickstart"，"with-test"和"release"三种方式，一般使用quickstart即可，其他的配置可以自己添加。</p>
+
+<p>quickstart的创建方式如下：</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mvn archetype:generate \
+</span><span class='line'>  -DarchetypeArtifactId=android-quickstart \
+</span><span class='line'>  -DarchetypeGroupId=de.akquinet.android.archetypes \
+</span><span class='line'>  -DarchetypeVersion=1.0.5 \
+</span><span class='line'>  -DgroupId=your.company \
+</span><span class='line'>  -DartifactId=my-android-application</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>默认情况下package名和groupId相同，可以使用'-Dpackage=...'的参数创建自定义的包名。创建的项目默认使用android2.2，可以通过'-Dplatform=...'设置使用的android sdk。</p>
+]]></content>
+  </entry>
+  
+</feed>
