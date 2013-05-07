@@ -9,8 +9,7 @@
   <meta name="author" content="zhen9ao">
 
   
-  <meta name="description" content="安装vpnc 连接IPSec需要用到vpnc这个包，通过opkg进行安装。 配置vpnc 在/etc/vpnc/目录下创建配置文件，内容如下： IPSec gateway server-address
-IPSec ID group-name IPSec secret psk-secret &hellip;">
+  <meta name="description" content="Mac中配置Squid 首先，用Homebrew安装Squid brew install squid 启动Squid launchctl load /usr/local/opt/squid/*.plist 这样就可以使用你的本机地址+3128端口使用http和https代理了。 关闭Squid &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -85,6 +84,104 @@ IPSec ID group-name IPSec secret psk-secret &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/05/07/ge-chong-dai-li-she-zhi/">各种代理设置</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-07T13:43:00+08:00" pubdate data-updated="true">May 7<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/05/07/ge-chong-dai-li-she-zhi/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Mac中配置Squid</h2>
+
+<p>首先，用<code>Homebrew</code>安装Squid</p>
+
+<pre><code>brew install squid
+</code></pre>
+
+<p>启动Squid</p>
+
+<pre><code>launchctl load /usr/local/opt/squid/*.plist
+</code></pre>
+
+<p>这样就可以使用你的本机地址+3128端口使用http和https代理了。</p>
+
+<p>关闭Squid</p>
+
+<pre><code>launchctl unload /usr/local/opt/squid/homebrew.mxcl.squid.plist
+</code></pre>
+
+<h2>Ubuntu配置apt代理</h2>
+
+<p>修改配置文件<code>/etc/apt/apt.conf.d/80proxy</code>，添加如下内容：</p>
+
+<pre><code>Acquire::http::Proxy "http://your-ip-addr:3128/";
+</code></pre>
+
+<h2>Ubuntu配置系统全局代理</h2>
+
+<p>修改配置文件<code>/etc/environment</code>，添加http及https代理：</p>
+
+<pre><code>http_proxy=http://your-ip-addr:3128/
+https_proxy=http://your-ip-addr:3128/
+</code></pre>
+
+<p>这样配置以后支持http代理的软件都可以访问外网了，不支持的则不行，这时候就需要全局的socket代理了。</p>
+
+<h2>Ubuntu配置socket代理，使用proxychains进行全局配置</h2>
+
+<p>前面几种方式都无法正常访问网络，那就需要最后这种方法了。</p>
+
+<p>安装proxychains：</p>
+
+<pre><code>sudo apt-get install proxychains
+</code></pre>
+
+<p>修改配置文件<code>/etc/proxychains.conf</code>，只需要修改其中的<code>ProxyList</code>，添加本地的ssh代理即可，如：</p>
+
+<pre><code>socks5 127.0.0.1 7777
+</code></pre>
+
+<p>使用proxychains，比如要进行bundler安装：</p>
+
+<pre><code>sudo -u git -H bundle install --without development test postgres --deployment
+</code></pre>
+
+<p>修改为：</p>
+
+<pre><code>sudo -u git -H proxychains bundle install --without development test postgres --deployment
+</code></pre>
+
+<p>bundler就可以使用ssh隧道代理进行更新了。总之就是在要执行的命令前键入一个proxychains就可以使用代理了。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -331,53 +428,6 @@ iptables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --cla
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/08/06/setup-android-x86-in-virtualbox/">在VirtualBox中配置Android-x86</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-08-06T09:38:00+08:00" pubdate data-updated="true">Aug 6<span>th</span>, 2012</time>
-        
-         | <a href="/blog/2012/08/06/setup-android-x86-in-virtualbox/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Android官方的模拟器速度太慢，性能很差，导致在实际开发中基本只能使用真机进行调试。下面就介绍一下<a href="http://www.android-x86.org/">Android-x86</a>项目，顾名思义，这个项目是为x86平台设计的Android系统，该系统可以运行在VirtualBox等虚拟机中。效率比官方的模拟器高出很多。</p>
-
-<h2>下载ISO文件</h2>
-
-<p>Android-86项目的ISO文件在<a href="http://www.android-x86.org/download">这里</a>可以下载到。如果想在VirtualBox里面使用，最好下载以<code>eeepc</code>结尾的映像文件，兼容性比较好。比如我下载的是：<code>android-x86-2.3-RC1-eeepc.iso</code></p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/08/06/setup-android-x86-in-virtualbox/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -395,8 +445,10 @@ iptables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --cla
 <li class='category'><a href='/blog/categories/bt/'>BT (1)</a></li>
 <li class='category'><a href='/blog/categories/daily/'>Daily (1)</a></li>
 <li class='category'><a href='/blog/categories/ipsec/'>IPSec (1)</a></li>
+<li class='category'><a href='/blog/categories/mac/'>Mac (1)</a></li>
 <li class='category'><a href='/blog/categories/openvpn/'>OpenVPN (2)</a></li>
 <li class='category'><a href='/blog/categories/openwrt/'>OpenWrt (4)</a></li>
+<li class='category'><a href='/blog/categories/proxy/'>Proxy (1)</a></li>
 <li class='category'><a href='/blog/categories/virtualbox/'>VirtualBox (1)</a></li>
 <li class='category'><a href='/blog/categories/xcode/'>Xcode (1)</a></li>
 <li class='category'><a href='/blog/categories/java/'>java (1)</a></li>
@@ -407,6 +459,10 @@ iptables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --cla
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/05/07/ge-chong-dai-li-she-zhi/">各种代理设置</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/12/13/lu-you-qi-shang-shi-yong-cisco-ipseclian-jie-wang-luo/">路由器上使用Cisco IPSec连接网络</a>
@@ -422,10 +478,6 @@ iptables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --cla
     
       <li class="post">
         <a href="/blog/2012/10/11/what-did-i-do-today/">今天都折腾了些什么</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/08/06/setup-android-x86-in-virtualbox/">在VirtualBox中配置Android-x86</a>
       </li>
     
   </ul>

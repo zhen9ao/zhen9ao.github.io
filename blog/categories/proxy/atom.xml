@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Proxy | Jack's Blog]]></title>
+  <link href="http://zhen9ao.github.io/blog/categories/proxy/atom.xml" rel="self"/>
+  <link href="http://zhen9ao.github.io/"/>
+  <updated>2013-05-07T14:00:25+08:00</updated>
+  <id>http://zhen9ao.github.io/</id>
+  <author>
+    <name><![CDATA[zhen9ao]]></name>
+    <email><![CDATA[zhen9ao@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[各种代理设置]]></title>
+    <link href="http://zhen9ao.github.io/blog/2013/05/07/ge-chong-dai-li-she-zhi/"/>
+    <updated>2013-05-07T13:43:00+08:00</updated>
+    <id>http://zhen9ao.github.io/blog/2013/05/07/ge-chong-dai-li-she-zhi</id>
+    <content type="html"><![CDATA[<h2>Mac中配置Squid</h2>
+
+<p>首先，用<code>Homebrew</code>安装Squid</p>
+
+<pre><code>brew install squid
+</code></pre>
+
+<p>启动Squid</p>
+
+<pre><code>launchctl load /usr/local/opt/squid/*.plist
+</code></pre>
+
+<p>这样就可以使用你的本机地址+3128端口使用http和https代理了。</p>
+
+<p>关闭Squid</p>
+
+<pre><code>launchctl unload /usr/local/opt/squid/homebrew.mxcl.squid.plist
+</code></pre>
+
+<h2>Ubuntu配置apt代理</h2>
+
+<p>修改配置文件<code>/etc/apt/apt.conf.d/80proxy</code>，添加如下内容：</p>
+
+<pre><code>Acquire::http::Proxy "http://your-ip-addr:3128/";
+</code></pre>
+
+<h2>Ubuntu配置系统全局代理</h2>
+
+<p>修改配置文件<code>/etc/environment</code>，添加http及https代理：</p>
+
+<pre><code>http_proxy=http://your-ip-addr:3128/
+https_proxy=http://your-ip-addr:3128/
+</code></pre>
+
+<p>这样配置以后支持http代理的软件都可以访问外网了，不支持的则不行，这时候就需要全局的socket代理了。</p>
+
+<h2>Ubuntu配置socket代理，使用proxychains进行全局配置</h2>
+
+<p>前面几种方式都无法正常访问网络，那就需要最后这种方法了。</p>
+
+<p>安装proxychains：</p>
+
+<pre><code>sudo apt-get install proxychains
+</code></pre>
+
+<p>修改配置文件<code>/etc/proxychains.conf</code>，只需要修改其中的<code>ProxyList</code>，添加本地的ssh代理即可，如：</p>
+
+<pre><code>socks5 127.0.0.1 7777
+</code></pre>
+
+<p>使用proxychains，比如要进行bundler安装：</p>
+
+<pre><code>sudo -u git -H bundle install --without development test postgres --deployment
+</code></pre>
+
+<p>修改为：</p>
+
+<pre><code>sudo -u git -H proxychains bundle install --without development test postgres --deployment
+</code></pre>
+
+<p>bundler就可以使用ssh隧道代理进行更新了。总之就是在要执行的命令前键入一个proxychains就可以使用代理了。</p>
+]]></content>
+  </entry>
+  
+</feed>
