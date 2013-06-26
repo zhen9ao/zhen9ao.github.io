@@ -9,7 +9,7 @@
   <meta name="author" content="zhen9ao">
 
   
-  <meta name="description" content="Mac中配置Squid 首先，用Homebrew安装Squid brew install squid 启动Squid launchctl load /usr/local/opt/squid/*.plist 这样就可以使用你的本机地址+3128端口使用http和https代理了。 关闭Squid &hellip;">
+  <meta name="description" content="近期查看vim-powerline的Github库发现该库已经不赞成使用了，作者转向了另一个powerline的库: 这里。所以最好是现在就重新配置吧！ 安装 首先poerline依赖的是python， 官方文档说是要用Mac自带的python安装，但几次实验发现不能正常使用， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -84,6 +84,93 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/06/26/an-zhuang-pei-zhi-powerline/">安装配置Powerline</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-26T16:32:00+08:00" pubdate data-updated="true">Jun 26<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/06/26/an-zhuang-pei-zhi-powerline/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>近期查看vim-powerline的Github库发现该库已经不赞成使用了，作者转向了另一个powerline的库: <a href="https://github.com/Lokaltog/powerline">这里</a>。所以最好是现在就重新配置吧！</p>
+
+<h2>安装</h2>
+
+<p>首先<code>poerline</code>依赖的是python， 官方文档说是要用Mac自带的python安装，但几次实验发现不能正常使用，所以测试用<code>Homebrew</code>安装，结果成功了。</p>
+
+<p><code>Homebrew</code>安装<code>python</code>会自动安装<code>pip</code>包管理工具，</p>
+
+<pre><code>brew install python
+</code></pre>
+
+<p>安装好后用<code>pip</code>安装powerline，但用<code>Homebrew</code>安装的<code>Python</code>不能使用<code>--user</code>的参数安装包(<a href="https://github.com/mxcl/homebrew/wiki/Homebrew-and-Python">参考</a>)，所以使用下面的命令即可：</p>
+
+<pre><code>pip install https://github.com/Lokaltog/powerline/tarball/develop
+</code></pre>
+
+<p>装好以后默认的默认安装路径是 <code>/usr/local/lib/python2.7/site-packages</code></p>
+
+<h2>配置</h2>
+
+<h3><code>zshrc</code></h3>
+
+<p>在<code>.zshrc</code>最后加上下面一行即可</p>
+
+<pre><code>. /usr/local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh¬
+</code></pre>
+
+<h3><code>vimrc</code></h3>
+
+<p>之前使用的<code>vim-powerline</code>插件可以禁用掉了，然后在<code>.vimrc</code>的最后添加如下一行即可</p>
+
+<pre><code>set rtp+=/usr/local/lib/python2.7/site-packages/powerline/bindings/vim¬
+</code></pre>
+
+<h2>字体</h2>
+
+<p>之前使用的<code>Monaco for Powerline</code>貌似不好使了，特殊符号无法显示，且<code>powerline</code>开发者也更新了字库文件，<a href="https://github.com/Lokaltog/powerline-fonts">这里</a></p>
+
+<p>选择一款喜欢的字体下载并在<code>iTerm2</code>中设置使用的字体即可。</p>
+
+<h3>gvimrc</h3>
+
+<p>如果还使用了<code>MacVim</code>，还需要配置一下<code>.gvimrc</code>文件，修改一下默认的字体，如：</p>
+
+<pre><code>set guifont=Menlo\ for\ Powerline:h16¬
+</code></pre>
+
+<p>这样就修改完成了！</p>
+
+<p>&#8211;EOF&#8211;</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -379,55 +466,6 @@ iptables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --cla
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/10/11/what-did-i-do-today/">今天都折腾了些什么</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-10-11T00:24:00+08:00" pubdate data-updated="true">Oct 11<span>th</span>, 2012</time>
-        
-         | <a href="/blog/2012/10/11/what-did-i-do-today/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>zsh</h2>
-
-<p>在看Ruby的时候，发现有人在提zsh，于是打算再次尝试。之前装过，但是重装系统后觉得麻烦就没再装了，今天看到一个不错的项目<a href="https://github.com/robbyrussell/oh-my-zsh"><code>oh-my-zshell</code></a>。它是一个帮助我们安装、管理和配置zsh的工具，使用起来也很简单。按主页上的说明自动安装即可：</p>
-
-<blockquote><p>curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sh</p></blockquote>
-
-<p>安装好了以后会在<code>~</code>目录创建一个<code>.zshrc</code>的zsh配置文件。其中前面的部分是<code>oh-my-zsh</code>的配置部分，可以对<code>配色</code>、<code>插件</code>进行配置。zsh的一个优势是和bash兼容，能执行<code>.bash_profile</code>或<code>.bashrc</code>中的配置，所以把bash的配置拷到zshrc的最后即可完成对已有配置的修改。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/10/11/what-did-i-do-today/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -461,6 +499,10 @@ iptables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --cla
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/06/26/an-zhuang-pei-zhi-powerline/">安装配置Powerline</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/05/07/ge-chong-dai-li-she-zhi/">各种代理设置</a>
       </li>
     
@@ -474,10 +516,6 @@ iptables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --cla
     
       <li class="post">
         <a href="/blog/2012/11/19/openwrttuo-ji-xia-zai/">OpenWrt脱机下载</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/10/11/what-did-i-do-today/">今天都折腾了些什么</a>
       </li>
     
   </ul>

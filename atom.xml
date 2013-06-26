@@ -4,7 +4,7 @@
   <title><![CDATA[Jack's Blog]]></title>
   <link href="http://zhen9ao.github.io/atom.xml" rel="self"/>
   <link href="http://zhen9ao.github.io/"/>
-  <updated>2013-05-07T14:00:25+08:00</updated>
+  <updated>2013-06-26T16:50:32+08:00</updated>
   <id>http://zhen9ao.github.io/</id>
   <author>
     <name><![CDATA[zhen9ao]]></name>
@@ -12,6 +12,64 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[安装配置Powerline]]></title>
+    <link href="http://zhen9ao.github.io/blog/2013/06/26/an-zhuang-pei-zhi-powerline/"/>
+    <updated>2013-06-26T16:32:00+08:00</updated>
+    <id>http://zhen9ao.github.io/blog/2013/06/26/an-zhuang-pei-zhi-powerline</id>
+    <content type="html"><![CDATA[<p>近期查看vim-powerline的Github库发现该库已经不赞成使用了，作者转向了另一个powerline的库: <a href="https://github.com/Lokaltog/powerline">这里</a>。所以最好是现在就重新配置吧！</p>
+
+<h2>安装</h2>
+
+<p>首先<code>poerline</code>依赖的是python， 官方文档说是要用Mac自带的python安装，但几次实验发现不能正常使用，所以测试用<code>Homebrew</code>安装，结果成功了。</p>
+
+<p><code>Homebrew</code>安装<code>python</code>会自动安装<code>pip</code>包管理工具，</p>
+
+<pre><code>brew install python
+</code></pre>
+
+<p>安装好后用<code>pip</code>安装powerline，但用<code>Homebrew</code>安装的<code>Python</code>不能使用<code>--user</code>的参数安装包(<a href="https://github.com/mxcl/homebrew/wiki/Homebrew-and-Python">参考</a>)，所以使用下面的命令即可：</p>
+
+<pre><code>pip install https://github.com/Lokaltog/powerline/tarball/develop
+</code></pre>
+
+<p>装好以后默认的默认安装路径是 <code>/usr/local/lib/python2.7/site-packages</code></p>
+
+<h2>配置</h2>
+
+<h3><code>zshrc</code></h3>
+
+<p>在<code>.zshrc</code>最后加上下面一行即可</p>
+
+<pre><code>. /usr/local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh¬
+</code></pre>
+
+<h3><code>vimrc</code></h3>
+
+<p>之前使用的<code>vim-powerline</code>插件可以禁用掉了，然后在<code>.vimrc</code>的最后添加如下一行即可</p>
+
+<pre><code>set rtp+=/usr/local/lib/python2.7/site-packages/powerline/bindings/vim¬
+</code></pre>
+
+<h2>字体</h2>
+
+<p>之前使用的<code>Monaco for Powerline</code>貌似不好使了，特殊符号无法显示，且<code>powerline</code>开发者也更新了字库文件，<a href="https://github.com/Lokaltog/powerline-fonts">这里</a></p>
+
+<p>选择一款喜欢的字体下载并在<code>iTerm2</code>中设置使用的字体即可。</p>
+
+<h3>gvimrc</h3>
+
+<p>如果还使用了<code>MacVim</code>，还需要配置一下<code>.gvimrc</code>文件，修改一下默认的字体，如：</p>
+
+<pre><code>set guifont=Menlo\ for\ Powerline:h16¬
+</code></pre>
+
+<p>这样就修改完成了！</p>
+
+<p>&#8211;EOF&#8211;</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[各种代理设置]]></title>
