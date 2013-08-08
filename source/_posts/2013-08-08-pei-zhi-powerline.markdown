@@ -8,7 +8,6 @@ categories: MacOS Terminal Powerline
 
 更新了iTerm2后，Powerline的字体出现了问题，重新到Powerline的网站上去看，才发现已经有了新的版本和安装方法。这里只介绍Mac OS下的安装和配置方法
 
-结果写完发现之前写过一篇Powerline了，这篇算是进化版吧。。。
 
 ### 与之前版本的安装区别
 
