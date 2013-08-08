@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>安装配置Powerline - Jack's Blog</title>
+  <title>配置Powerline - Jack's Blog</title>
   <meta name="author" content="zhen9ao">
 
   
-  <meta name="description" content="近期查看vim-powerline的Github库发现该库已经不赞成使用了，作者转向了另一个powerline的库: 这里。所以最好是现在就重新配置吧！ 安装 首先poerline依赖的是Python， 官方文档说是要用Mac自带的Python安装，但几次实验发现不能正常使用， &hellip;">
+  <meta name="description" content="更新了iTerm2后，Powerline的字体出现了问题，重新到Powerline的网站上去看，才发现已经有了新的版本和安装方法。这里只介绍Mac OS下的安装和配置方法 与之前版本的安装区别 之前的vim-powerline插件弃用了，现在改为一个Python脚本 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://zhen9ao.github.io/blog/2013/06/26/an-zhuang-pei-zhi-powerline">
+  <link rel="canonical" href="http://zhen9ao.github.io/blog/2013/08/08/pei-zhi-powerline">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Jack's Blog" type="application/atom+xml">
@@ -80,7 +80,7 @@
   
   <header>
     
-      <h1 class="entry-title">安装配置Powerline</h1>
+      <h1 class="entry-title">配置Powerline</h1>
     
     
       <p class="meta">
@@ -96,7 +96,7 @@
   
 
 
-<time datetime="2013-06-26T16:32:00+08:00" pubdate data-updated="true">Jun 26<span>th</span>, 2013</time>
+<time datetime="2013-08-08T13:56:00+08:00" pubdate data-updated="true">Aug 8<span>th</span>, 2013</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -105,56 +105,80 @@
   </header>
 
 
-<div class="entry-content"><p>近期查看vim-powerline的Github库发现该库已经不赞成使用了，作者转向了另一个powerline的库: <a href="https://github.com/Lokaltog/powerline">这里</a>。所以最好是现在就重新配置吧！</p>
+<div class="entry-content"><p>更新了iTerm2后，Powerline的字体出现了问题，重新到Powerline的网站上去看，才发现已经有了新的版本和安装方法。这里只介绍Mac OS下的安装和配置方法</p>
 
-<h2>安装</h2>
+<h3>与之前版本的安装区别</h3>
 
-<p>首先<code>poerline</code>依赖的是<code>Python</code>， 官方文档说是要用Mac自带的Python安装，但几次实验发现不能正常使用，所以测试用<code>Homebrew</code>安装，结果成功了。</p>
+<ul>
+<li>之前的<code>vim-powerline</code>插件弃用了，现在改为一个Python脚本</li>
+<li>zsh的Powerline主题更新</li>
+<li>字体文件发生了变化，之前的字体文件不能用，官方推出了几个path过的字体，当然也可以自己path喜欢的字体</li>
+</ul>
 
-<p><code>Homebrew</code>安装<code>python</code>会自动安装<code>pip</code>包管理工具，</p>
 
-<pre><code>brew install python
+<!--more-->
+
+
+<h3>安装、配置Powerline</h3>
+
+<p>新的代码库地址为：</p>
+
+<pre><code>https://github.com/Lokaltog/powerline
 </code></pre>
 
-<p>安装好后用<code>pip</code>安装powerline，但用<code>Homebrew</code>安装的<code>Python</code>不能使用<code>--user</code>的参数安装包(<a href="https://github.com/mxcl/homebrew/wiki/Homebrew-and-Python">参考</a>)，所以使用下面的命令即可：</p>
+<p>首先，要安装<code>pip</code>，如果需要权限，在命令前面加上<code>sudo</code></p>
 
-<pre><code>pip install https://github.com/Lokaltog/powerline/tarball/develop
+<pre><code>easy_install pip
 </code></pre>
 
-<p>装好以后默认的默认安装路径是 <code>/usr/local/lib/python2.7/site-packages</code></p>
+<p>然后安装<code>powerline</code></p>
 
-<h2>配置</h2>
-
-<h3><code>zshrc</code></h3>
-
-<p>在<code>.zshrc</code>最后加上下面一行即可</p>
-
-<pre><code>. /usr/local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
+<pre><code>pip install --user git+git://github.com/Lokaltog/powerline
 </code></pre>
 
-<h3><code>vimrc</code></h3>
-
-<p>之前使用的<code>vim-powerline</code>插件可以禁用掉了，然后在<code>.vimrc</code>的最后添加如下一行即可</p>
+<p>最后还要在<code>vimrc</code>中加入一下配置：</p>
 
 <pre><code>set rtp+=/usr/local/lib/python2.7/site-packages/powerline/bindings/vim
 </code></pre>
 
-<h2>字体</h2>
+<p>其中<code>/usr/local/lib/python2.7/site-packages/</code>目录是python的插件安装目录，如果当前使用的是系统python，则安装目录可能不同</p>
 
-<p>之前使用的<code>Monaco for Powerline</code>貌似不好使了，特殊符号无法显示，且<code>powerline</code>开发者也更新了字库文件，<a href="https://github.com/Lokaltog/powerline-fonts">这里</a></p>
+<p>如果还打算在<code>zsh</code>中使用<code>powerline</code>主题的话，推荐使用<code>oh-my-zsh-powerline-theme</code>，可以作为一个submodule放在dotfiles中，地址在：</p>
 
-<p>选择一款喜欢的字体下载并在<code>iTerm2</code>中设置使用的字体即可。</p>
-
-<h3>gvimrc</h3>
-
-<p>如果还使用了<code>MacVim</code>，还需要配置一下<code>.gvimrc</code>文件，修改一下默认的字体，如：</p>
-
-<pre><code>set guifont=Menlo\ for\ Powerline:h16
+<pre><code>https://github.com/jeremyFreeAgent/oh-my-zsh-powerline-theme
 </code></pre>
 
-<p>这样就修改完成了！</p>
+<p>然后执行一下其中的</p>
 
-<p>&#8211;EOF&#8211;</p>
+<pre><code>install_in_omz.sh
+</code></pre>
+
+<p>就会自动将<code>powerline.zsh-theme</code>放在指定的位置了</p>
+
+<p>然后在<code>.zshrc</code>中配置<code>ZSH_THEME</code>参数为<code>powerline</code>，即可使用oh-my-zsh的powerline-theme了。</p>
+
+<p>这时可能会有一些符号无法正常显示，现在需要做的就是给字体打补丁（也可以用powerline提供的已经打过补丁的<a href="https://github.com/Lokaltog/powerline-fonts">字体</a>）</p>
+
+<p>不过LZ还是喜欢用Menlo字体，所以需要自己给自己打补丁，那就开始吧</p>
+
+<p>首先，将系统中的Menlo字体导出到<code>~/Desktop</code></p>
+
+<p>其次，安装<code>fontforge</code></p>
+
+<pre><code>brew install fontforge
+</code></pre>
+
+<p>然后，克隆<code>powerline</code>的代码</p>
+
+<pre><code>git clone https://github.com/Lokaltog/powerline-fonts.git
+</code></pre>
+
+<p>最后使用代码库中的pather，<code>font/fontpather.py</code></p>
+
+<pre><code>fontforge -script /path/to/powerline/font/fontpather.py /path/to/your/font.ttf
+</code></pre>
+
+<p>将生成的后缀为<code>for powerline</code>的字体导入到字体库中，设置iTerm的字体，这样就可以正确显示符号了</p>
 </div>
 
 
@@ -177,15 +201,21 @@
   
 
 
-<time datetime="2013-06-26T16:32:00+08:00" pubdate data-updated="true">Jun 26<span>th</span>, 2013</time>
+<time datetime="2013-08-08T13:56:00+08:00" pubdate data-updated="true">Aug 8<span>th</span>, 2013</time>
       
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/macos/'>MacOS</a>, <a class='category' href='/blog/categories/powerline/'>Powerline</a>, <a class='category' href='/blog/categories/terminal/'>Terminal</a>
+  
+</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://zhen9ao.github.io/blog/2013/06/26/an-zhuang-pei-zhi-powerline/" data-via="zhen9ao" data-counturl="http://zhen9ao.github.io/blog/2013/06/26/an-zhuang-pei-zhi-powerline/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://zhen9ao.github.io/blog/2013/08/08/pei-zhi-powerline/" data-via="zhen9ao" data-counturl="http://zhen9ao.github.io/blog/2013/08/08/pei-zhi-powerline/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -198,10 +228,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2013/05/07/ge-chong-dai-li-she-zhi/" title="Previous Post: 各种代理设置">&laquo; 各种代理设置</a>
+        <a class="basic-alignment left" href="/blog/2013/06/26/an-zhuang-pei-zhi-powerline/" title="Previous Post: 安装配置Powerline">&laquo; 安装配置Powerline</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2013/08/08/pei-zhi-powerline/" title="Next Post: 配置Powerline">配置Powerline &raquo;</a>
       
     </p>
   </footer>
@@ -343,8 +371,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://zhen9ao.github.io/blog/2013/06/26/an-zhuang-pei-zhi-powerline/';
-        var disqus_url = 'http://zhen9ao.github.io/blog/2013/06/26/an-zhuang-pei-zhi-powerline/';
+        var disqus_identifier = 'http://zhen9ao.github.io/blog/2013/08/08/pei-zhi-powerline/';
+        var disqus_url = 'http://zhen9ao.github.io/blog/2013/08/08/pei-zhi-powerline/';
         var disqus_script = 'embed.js';
       
     (function () {

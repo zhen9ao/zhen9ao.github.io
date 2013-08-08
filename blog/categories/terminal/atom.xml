@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Terminal | Jack's Blog]]></title>
+  <link href="http://zhen9ao.github.io/blog/categories/terminal/atom.xml" rel="self"/>
+  <link href="http://zhen9ao.github.io/"/>
+  <updated>2013-08-08T14:35:10+08:00</updated>
+  <id>http://zhen9ao.github.io/</id>
+  <author>
+    <name><![CDATA[zhen9ao]]></name>
+    <email><![CDATA[zhen9ao@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[配置Powerline]]></title>
+    <link href="http://zhen9ao.github.io/blog/2013/08/08/pei-zhi-powerline/"/>
+    <updated>2013-08-08T13:56:00+08:00</updated>
+    <id>http://zhen9ao.github.io/blog/2013/08/08/pei-zhi-powerline</id>
+    <content type="html"><![CDATA[<p>更新了iTerm2后，Powerline的字体出现了问题，重新到Powerline的网站上去看，才发现已经有了新的版本和安装方法。这里只介绍Mac OS下的安装和配置方法</p>
+
+<h3>与之前版本的安装区别</h3>
+
+<ul>
+<li>之前的<code>vim-powerline</code>插件弃用了，现在改为一个Python脚本</li>
+<li>zsh的Powerline主题更新</li>
+<li>字体文件发生了变化，之前的字体文件不能用，官方推出了几个path过的字体，当然也可以自己path喜欢的字体</li>
+</ul>
+
+
+<!--more-->
+
+
+<h3>安装、配置Powerline</h3>
+
+<p>新的代码库地址为：</p>
+
+<pre><code>https://github.com/Lokaltog/powerline
+</code></pre>
+
+<p>首先，要安装<code>pip</code>，如果需要权限，在命令前面加上<code>sudo</code></p>
+
+<pre><code>easy_install pip
+</code></pre>
+
+<p>然后安装<code>powerline</code></p>
+
+<pre><code>pip install --user git+git://github.com/Lokaltog/powerline
+</code></pre>
+
+<p>最后还要在<code>vimrc</code>中加入一下配置：</p>
+
+<pre><code>set rtp+=/usr/local/lib/python2.7/site-packages/powerline/bindings/vim
+</code></pre>
+
+<p>其中<code>/usr/local/lib/python2.7/site-packages/</code>目录是python的插件安装目录，如果当前使用的是系统python，则安装目录可能不同</p>
+
+<p>如果还打算在<code>zsh</code>中使用<code>powerline</code>主题的话，推荐使用<code>oh-my-zsh-powerline-theme</code>，可以作为一个submodule放在dotfiles中，地址在：</p>
+
+<pre><code>https://github.com/jeremyFreeAgent/oh-my-zsh-powerline-theme
+</code></pre>
+
+<p>然后执行一下其中的</p>
+
+<pre><code>install_in_omz.sh
+</code></pre>
+
+<p>就会自动将<code>powerline.zsh-theme</code>放在指定的位置了</p>
+
+<p>然后在<code>.zshrc</code>中配置<code>ZSH_THEME</code>参数为<code>powerline</code>，即可使用oh-my-zsh的powerline-theme了。</p>
+
+<p>这时可能会有一些符号无法正常显示，现在需要做的就是给字体打补丁（也可以用powerline提供的已经打过补丁的<a href="https://github.com/Lokaltog/powerline-fonts">字体</a>）</p>
+
+<p>不过LZ还是喜欢用Menlo字体，所以需要自己给自己打补丁，那就开始吧</p>
+
+<p>首先，将系统中的Menlo字体导出到<code>~/Desktop</code></p>
+
+<p>其次，安装<code>fontforge</code></p>
+
+<pre><code>brew install fontforge
+</code></pre>
+
+<p>然后，克隆<code>powerline</code>的代码</p>
+
+<pre><code>git clone https://github.com/Lokaltog/powerline-fonts.git
+</code></pre>
+
+<p>最后使用代码库中的pather，<code>font/fontpather.py</code></p>
+
+<pre><code>fontforge -script /path/to/powerline/font/fontpather.py /path/to/your/font.ttf
+</code></pre>
+
+<p>将生成的后缀为<code>for powerline</code>的字体导入到字体库中，设置iTerm的字体，这样就可以正确显示符号了</p>
+]]></content>
+  </entry>
+  
+</feed>

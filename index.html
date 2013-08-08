@@ -9,7 +9,7 @@
   <meta name="author" content="zhen9ao">
 
   
-  <meta name="description" content="近期查看vim-powerline的Github库发现该库已经不赞成使用了，作者转向了另一个powerline的库: 这里。所以最好是现在就重新配置吧！ 安装 首先poerline依赖的是Python， 官方文档说是要用Mac自带的Python安装，但几次实验发现不能正常使用， &hellip;">
+  <meta name="description" content="更新了iTerm2后，Powerline的字体出现了问题，重新到Powerline的网站上去看，才发现已经有了新的版本和安装方法。这里只介绍Mac OS下的安装和配置方法 与之前版本的安装区别 之前的vim-powerline插件弃用了，现在改为一个Python脚本 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,6 +77,58 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/08/08/pei-zhi-powerline/">配置Powerline</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-08-08T13:56:00+08:00" pubdate data-updated="true">Aug 8<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/08/08/pei-zhi-powerline/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>更新了iTerm2后，Powerline的字体出现了问题，重新到Powerline的网站上去看，才发现已经有了新的版本和安装方法。这里只介绍Mac OS下的安装和配置方法</p>
+
+<h3>与之前版本的安装区别</h3>
+
+<ul>
+<li>之前的<code>vim-powerline</code>插件弃用了，现在改为一个Python脚本</li>
+<li>zsh的Powerline主题更新</li>
+<li>字体文件发生了变化，之前的字体文件不能用，官方推出了几个path过的字体，当然也可以自己path喜欢的字体</li>
+</ul>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/08/08/pei-zhi-powerline/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -398,67 +450,6 @@ iptables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --cla
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/11/19/openwrttuo-ji-xia-zai/">OpenWrt脱机下载</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-11-19T12:31:00+08:00" pubdate data-updated="true">Nov 19<span>th</span>, 2012</time>
-        
-         | <a href="/blog/2012/11/19/openwrttuo-ji-xia-zai/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>一般为了实现脱机下载，可能会考虑搭建一个自用的NAS系统，不过这样的一个系统一般要准备一个小机箱之类的PC来搭建。考虑到耗电和成本的因素，加上OpenWrt很好很强大，所以完全没必要为了脱机下载专门配个Atom芯片的PC，一个路由器足以搞定。</p>
-
-<h3>准备</h3>
-
-<p>一个可以刷OpenWrt的路由器（我用的wr703n），一个大U盘（现在U盘都非常便宜，100多就可以买一个32G的），一个Linux虚拟机或者物理机。</p>
-
-<h2>配置OpenWrt</h2>
-
-<p>刷好OpenWrt之后，只需要先把网络、无线先配置好，然后通过wifi连接路由器。</p>
-
-<h3>让路由器从U盘引导启动</h3>
-
-<p>这么做，有几个好处：</p>
-
-<ol>
-<li>使用<code>opkg</code>安装的东西就默认在U盘了，需要装什么就可以尽情的装。</li>
-<li>如果以后再对路由器修改配置导致路由器变砖或者无法启动，拔掉U盘就可以从路由器的存储启动了，不用重新刷机。</li>
-</ol>
-
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/11/19/openwrttuo-ji-xia-zai/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -477,9 +468,12 @@ iptables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --cla
 <li class='category'><a href='/blog/categories/daily/'>Daily (1)</a></li>
 <li class='category'><a href='/blog/categories/ipsec/'>IPSec (1)</a></li>
 <li class='category'><a href='/blog/categories/mac/'>Mac (1)</a></li>
+<li class='category'><a href='/blog/categories/macos/'>MacOS (1)</a></li>
 <li class='category'><a href='/blog/categories/openvpn/'>OpenVPN (2)</a></li>
 <li class='category'><a href='/blog/categories/openwrt/'>OpenWrt (4)</a></li>
+<li class='category'><a href='/blog/categories/powerline/'>Powerline (1)</a></li>
 <li class='category'><a href='/blog/categories/proxy/'>Proxy (1)</a></li>
+<li class='category'><a href='/blog/categories/terminal/'>Terminal (1)</a></li>
 <li class='category'><a href='/blog/categories/virtualbox/'>VirtualBox (1)</a></li>
 <li class='category'><a href='/blog/categories/xcode/'>Xcode (1)</a></li>
 <li class='category'><a href='/blog/categories/java/'>java (1)</a></li>
@@ -490,6 +484,10 @@ iptables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --cla
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/08/08/pei-zhi-powerline/">配置Powerline</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/06/26/an-zhuang-pei-zhi-powerline/">安装配置Powerline</a>
@@ -505,10 +503,6 @@ iptables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --cla
     
       <li class="post">
         <a href="/blog/2012/12/06/openwrtde-dnspei-zhi/">OpenWrt的DNS配置</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/11/19/openwrttuo-ji-xia-zai/">OpenWrt脱机下载</a>
       </li>
     
   </ul>
