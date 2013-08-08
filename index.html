@@ -9,7 +9,7 @@
   <meta name="author" content="zhen9ao">
 
   
-  <meta name="description" content="更新了iTerm2后，Powerline的字体出现了问题，重新到Powerline的网站上去看，才发现已经有了新的版本和安装方法。这里只介绍Mac OS下的安装和配置方法 与之前版本的安装区别 之前的vim-powerline插件弃用了，现在改为一个Python脚本 &hellip;">
+  <meta name="description" content="更新了iTerm2后，Powerline的字体出现了问题，重新到Powerline的网站上去看，才发现已经有了新的版本和安装方法。这里只介绍Mac OS下的安装和配置方法 结果写完发现之前写过一篇Powerline了，这篇算是进化版吧。。。 与之前版本的安装区别 之前的vim- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -110,6 +110,8 @@
 
   <div class="entry-content"><p>更新了iTerm2后，Powerline的字体出现了问题，重新到Powerline的网站上去看，才发现已经有了新的版本和安装方法。这里只介绍Mac OS下的安装和配置方法</p>
 
+<p>结果写完发现之前写过一篇Powerline了，这篇算是进化版吧。。。</p>
+
 <h3>与之前版本的安装区别</h3>
 
 <ul>
@@ -125,93 +127,6 @@
     <footer>
       <a rel="full-article" href="/blog/2013/08/08/pei-zhi-powerline/">Read on &rarr;</a>
     </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/06/26/an-zhuang-pei-zhi-powerline/">安装配置Powerline</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-06-26T16:32:00+08:00" pubdate data-updated="true">Jun 26<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/06/26/an-zhuang-pei-zhi-powerline/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>近期查看vim-powerline的Github库发现该库已经不赞成使用了，作者转向了另一个powerline的库: <a href="https://github.com/Lokaltog/powerline">这里</a>。所以最好是现在就重新配置吧！</p>
-
-<h2>安装</h2>
-
-<p>首先<code>poerline</code>依赖的是<code>Python</code>， 官方文档说是要用Mac自带的Python安装，但几次实验发现不能正常使用，所以测试用<code>Homebrew</code>安装，结果成功了。</p>
-
-<p><code>Homebrew</code>安装<code>python</code>会自动安装<code>pip</code>包管理工具，</p>
-
-<pre><code>brew install python
-</code></pre>
-
-<p>安装好后用<code>pip</code>安装powerline，但用<code>Homebrew</code>安装的<code>Python</code>不能使用<code>--user</code>的参数安装包(<a href="https://github.com/mxcl/homebrew/wiki/Homebrew-and-Python">参考</a>)，所以使用下面的命令即可：</p>
-
-<pre><code>pip install https://github.com/Lokaltog/powerline/tarball/develop
-</code></pre>
-
-<p>装好以后默认的默认安装路径是 <code>/usr/local/lib/python2.7/site-packages</code></p>
-
-<h2>配置</h2>
-
-<h3><code>zshrc</code></h3>
-
-<p>在<code>.zshrc</code>最后加上下面一行即可</p>
-
-<pre><code>. /usr/local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
-</code></pre>
-
-<h3><code>vimrc</code></h3>
-
-<p>之前使用的<code>vim-powerline</code>插件可以禁用掉了，然后在<code>.vimrc</code>的最后添加如下一行即可</p>
-
-<pre><code>set rtp+=/usr/local/lib/python2.7/site-packages/powerline/bindings/vim
-</code></pre>
-
-<h2>字体</h2>
-
-<p>之前使用的<code>Monaco for Powerline</code>貌似不好使了，特殊符号无法显示，且<code>powerline</code>开发者也更新了字库文件，<a href="https://github.com/Lokaltog/powerline-fonts">这里</a></p>
-
-<p>选择一款喜欢的字体下载并在<code>iTerm2</code>中设置使用的字体即可。</p>
-
-<h3>gvimrc</h3>
-
-<p>如果还使用了<code>MacVim</code>，还需要配置一下<code>.gvimrc</code>文件，修改一下默认的字体，如：</p>
-
-<pre><code>set guifont=Menlo\ for\ Powerline:h16
-</code></pre>
-
-<p>这样就修改完成了！</p>
-
-<p>&#8211;EOF&#8211;</p>
-</div>
-  
   
 
 
@@ -450,6 +365,67 @@ iptables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --cla
 
     </article>
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/11/19/openwrttuo-ji-xia-zai/">OpenWrt脱机下载</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-19T12:31:00+08:00" pubdate data-updated="true">Nov 19<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/11/19/openwrttuo-ji-xia-zai/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>一般为了实现脱机下载，可能会考虑搭建一个自用的NAS系统，不过这样的一个系统一般要准备一个小机箱之类的PC来搭建。考虑到耗电和成本的因素，加上OpenWrt很好很强大，所以完全没必要为了脱机下载专门配个Atom芯片的PC，一个路由器足以搞定。</p>
+
+<h3>准备</h3>
+
+<p>一个可以刷OpenWrt的路由器（我用的wr703n），一个大U盘（现在U盘都非常便宜，100多就可以买一个32G的），一个Linux虚拟机或者物理机。</p>
+
+<h2>配置OpenWrt</h2>
+
+<p>刷好OpenWrt之后，只需要先把网络、无线先配置好，然后通过wifi连接路由器。</p>
+
+<h3>让路由器从U盘引导启动</h3>
+
+<p>这么做，有几个好处：</p>
+
+<ol>
+<li>使用<code>opkg</code>安装的东西就默认在U盘了，需要装什么就可以尽情的装。</li>
+<li>如果以后再对路由器修改配置导致路由器变砖或者无法启动，拔掉U盘就可以从路由器的存储启动了，不用重新刷机。</li>
+</ol>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/11/19/openwrttuo-ji-xia-zai/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -490,10 +466,6 @@ iptables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --cla
       </li>
     
       <li class="post">
-        <a href="/blog/2013/06/26/an-zhuang-pei-zhi-powerline/">安装配置Powerline</a>
-      </li>
-    
-      <li class="post">
         <a href="/blog/2013/05/07/ge-chong-dai-li-she-zhi/">各种代理设置</a>
       </li>
     
@@ -503,6 +475,10 @@ iptables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --cla
     
       <li class="post">
         <a href="/blog/2012/12/06/openwrtde-dnspei-zhi/">OpenWrt的DNS配置</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/11/19/openwrttuo-ji-xia-zai/">OpenWrt脱机下载</a>
       </li>
     
   </ul>

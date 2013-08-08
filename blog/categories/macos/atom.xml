@@ -4,7 +4,7 @@
   <title><![CDATA[Category: MacOS | Jack's Blog]]></title>
   <link href="http://zhen9ao.github.io/blog/categories/macos/atom.xml" rel="self"/>
   <link href="http://zhen9ao.github.io/"/>
-  <updated>2013-08-08T14:35:10+08:00</updated>
+  <updated>2013-08-08T14:39:37+08:00</updated>
   <id>http://zhen9ao.github.io/</id>
   <author>
     <name><![CDATA[zhen9ao]]></name>
@@ -20,6 +20,8 @@
     <id>http://zhen9ao.github.io/blog/2013/08/08/pei-zhi-powerline</id>
     <content type="html"><![CDATA[<p>更新了iTerm2后，Powerline的字体出现了问题，重新到Powerline的网站上去看，才发现已经有了新的版本和安装方法。这里只介绍Mac OS下的安装和配置方法</p>
 
+<p>结果写完发现之前写过一篇Powerline了，这篇算是进化版吧。。。</p>
+
 <h3>与之前版本的安装区别</h3>
 
 <ul>
@@ -34,20 +36,19 @@
 
 <h3>安装、配置Powerline</h3>
 
-<p>新的代码库地址为：</p>
+<p>首先<code>poerline</code>依赖的是<code>Python</code>， 官方文档说是要用Mac自带的Python安装，但几次实验发现不能正常使用，所以测试用<code>Homebrew</code>安装，结果成功了。</p>
 
-<pre><code>https://github.com/Lokaltog/powerline
+<p><code>Homebrew</code>安装<code>python</code>会自动安装<code>pip</code>包管理工具，</p>
+
+<pre><code>brew install python
 </code></pre>
 
-<p>首先，要安装<code>pip</code>，如果需要权限，在命令前面加上<code>sudo</code></p>
+<p>安装好后用<code>pip</code>安装powerline，但用<code>Homebrew</code>安装的<code>Python</code>不能使用<code>--user</code>的参数安装包(<a href="https://github.com/mxcl/homebrew/wiki/Homebrew-and-Python">参考</a>)，所以使用下面的命令即可：</p>
 
-<pre><code>easy_install pip
+<pre><code>pip install https://github.com/Lokaltog/powerline/tarball/develop
 </code></pre>
 
-<p>然后安装<code>powerline</code></p>
-
-<pre><code>pip install --user git+git://github.com/Lokaltog/powerline
-</code></pre>
+<p>装好以后默认的默认安装路径是 <code>/usr/local/lib/python2.7/site-packages</code></p>
 
 <p>最后还要在<code>vimrc</code>中加入一下配置：</p>
 

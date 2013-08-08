@@ -9,7 +9,7 @@
   <meta name="author" content="zhen9ao">
 
   
-  <meta name="description" content="一般为了实现脱机下载，可能会考虑搭建一个自用的NAS系统，不过这样的一个系统一般要准备一个小机箱之类的PC来搭建。考虑到耗电和成本的因素，加上OpenWrt很好很强大，所以完全没必要为了脱机下载专门配个Atom芯片的PC，一个路由器足以搞定。 准备 一个可以刷OpenWrt的路由器（ &hellip;">
+  <meta name="description" content="zsh 在看Ruby的时候，发现有人在提zsh，于是打算再次尝试。之前装过，但是重装系统后觉得麻烦就没再装了，今天看到一个不错的项目oh-my-zshell。它是一个帮助我们安装、管理和配置zsh的工具，使用起来也很简单。按主页上的说明自动安装即可： curl -L https://github. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,67 +77,6 @@
     <div id="content">
       <div class="blog-index">
   
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/11/19/openwrttuo-ji-xia-zai/">OpenWrt脱机下载</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-11-19T12:31:00+08:00" pubdate data-updated="true">Nov 19<span>th</span>, 2012</time>
-        
-         | <a href="/blog/2012/11/19/openwrttuo-ji-xia-zai/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>一般为了实现脱机下载，可能会考虑搭建一个自用的NAS系统，不过这样的一个系统一般要准备一个小机箱之类的PC来搭建。考虑到耗电和成本的因素，加上OpenWrt很好很强大，所以完全没必要为了脱机下载专门配个Atom芯片的PC，一个路由器足以搞定。</p>
-
-<h3>准备</h3>
-
-<p>一个可以刷OpenWrt的路由器（我用的wr703n），一个大U盘（现在U盘都非常便宜，100多就可以买一个32G的），一个Linux虚拟机或者物理机。</p>
-
-<h2>配置OpenWrt</h2>
-
-<p>刷好OpenWrt之后，只需要先把网络、无线先配置好，然后通过wifi连接路由器。</p>
-
-<h3>让路由器从U盘引导启动</h3>
-
-<p>这么做，有几个好处：</p>
-
-<ol>
-<li>使用<code>opkg</code>安装的东西就默认在U盘了，需要装什么就可以尽情的装。</li>
-<li>如果以后再对路由器修改配置导致路由器变砖或者无法启动，拔掉U盘就可以从路由器的存储启动了，不用重新刷机。</li>
-</ol>
-
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/11/19/openwrttuo-ji-xia-zai/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
   
   
     <article>
@@ -326,6 +265,63 @@ P.S.：也许可以在Keychain中进行修复而不是重置来解决这个问�
 
     </article>
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/04/10/how-to-config-openwrt-with-openvpn-on-tp-link-wr703n/">在TP-Link上安装OpenWrt并配置OpenVPN</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-10T10:18:00+08:00" pubdate data-updated="true">Apr 10<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/04/10/how-to-config-openwrt-with-openvpn-on-tp-link-wr703n/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>路由器的选择</h2>
+
+<p>要安装OpenWrt，首先要选择一款适合的路由器。可以在OpenWrt的官网中查看支持的<a href="http://wiki.openwrt.org/toh/start">设备列表</a>，从中选择可以使用的设备。最好选择带USB口的设备（这样可以接U盘，把需要的软件装到U盘中，比如OpenVPN和Python等组件），一般带USB口的设备都是3G路由器或比较高端的路由器，从节约成本的角度考虑，最好是选择3G路由器，高端路由器当然更好，有更强大的CPU。</p>
+
+<p>我选择了<a href="http://www.tp-link.cn/pages/product-detail.asp?d=225">TP-Link wr703n</a>，这款路由器小巧，方便携带，但功能不弱。</p>
+
+<h2>准备工作</h2>
+
+<p>这里主要考虑的是wr703n只做爬墙使用，不做PPPoE拨号，所以需要准备的东西如下：</p>
+
+<ol>
+<li>网线</li>
+<li>U盘（或TF卡+读卡器等）</li>
+</ol>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/04/10/how-to-config-openwrt-with-openvpn-on-tp-link-wr703n/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -368,10 +364,6 @@ P.S.：也许可以在Keychain中进行修复而不是重置来解决这个问�
       </li>
     
       <li class="post">
-        <a href="/blog/2013/06/26/an-zhuang-pei-zhi-powerline/">安装配置Powerline</a>
-      </li>
-    
-      <li class="post">
         <a href="/blog/2013/05/07/ge-chong-dai-li-she-zhi/">各种代理设置</a>
       </li>
     
@@ -381,6 +373,10 @@ P.S.：也许可以在Keychain中进行修复而不是重置来解决这个问�
     
       <li class="post">
         <a href="/blog/2012/12/06/openwrtde-dnspei-zhi/">OpenWrt的DNS配置</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/11/19/openwrttuo-ji-xia-zai/">OpenWrt脱机下载</a>
       </li>
     
   </ul>
