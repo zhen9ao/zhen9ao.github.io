@@ -98,7 +98,8 @@
 
 <time datetime="2012-04-10T10:18:00+08:00" pubdate data-updated="true">Apr 10<span>th</span>, 2012</time>
         
-         | <a href="#disqus_thread">Comments</a>
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://zhen9ao.github.io">Comments</a>
         
       </p>
     
@@ -267,7 +268,7 @@ iptables -t nat -A POSTROUTING -s 192.168.2.0/24 -j MASQUERADE
 
 <h2>USB配置</h2>
 
-<p>wr703n只有4MB的闪存，装完OpenWrt以后，只剩&#8211;1.4Mb&#8211;的(现在rom自带了luci，所以刷好后的可用空间只有900多Kb了)可用空间了，这些空间只够装一些必备的工具，OpenVPN等一些软件就需要装载外挂的USB设备中了</p>
+<p>wr703n只有4MB的闪存，装完OpenWrt以后，只剩&mdash;1.4Mb&mdash;的(现在rom自带了luci，所以刷好后的可用空间只有900多Kb了)可用空间了，这些空间只够装一些必备的工具，OpenVPN等一些软件就需要装载外挂的USB设备中了</p>
 
 <h3>安装必备软件</h3>
 
@@ -344,7 +345,7 @@ mount /dev/sda1 /mnt/usb
 
 <ul>
 <li>可以配合使用chnroute，减少openvpn的流量消耗</li>
-<li>本文大部分内容都是源于这两个博客，感谢这两个博主的文章：<a href="http://blog.proadm.net/blog/2011/10/25/Building-a-GFWless-AP-on-WR703n/">Lei Yang&#8217;s Geek Life</a> 和 <a href="http://www.ratazzi.org/2012/02/09/install-openvpn-and-openwrt-on-wr703n/">Ratazzis&#8217;s Blog</a></li>
+<li>本文大部分内容都是源于这两个博客，感谢这两个博主的文章：<a href="http://blog.proadm.net/blog/2011/10/25/Building-a-GFWless-AP-on-WR703n/">Lei Yang&rsquo;s Geek Life</a> 和 <a href="http://www.ratazzi.org/2012/02/09/install-openvpn-and-openwrt-on-wr703n/">Ratazzis&rsquo;s Blog</a></li>
 </ul>
 
 
@@ -462,7 +463,7 @@ log /tmp/openvpn.log
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://zhen9ao.github.io/blog/2012/04/10/how-to-config-openwrt-with-openvpn-on-tp-link-wr703n/" data-via="zhen9ao" data-counturl="http://zhen9ao.github.io/blog/2012/04/10/how-to-config-openwrt-with-openvpn-on-tp-link-wr703n/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://zhen9ao.github.io/blog/2012/04/10/how-to-config-openwrt-with-openvpn-on-tp-link-wr703n/" data-via="zhen9ao" data-counturl="http://zhen9ao.github.io/blog/2012/04/10/how-to-config-openwrt-with-openvpn-on-tp-link-wr703n/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -626,7 +627,7 @@ log /tmp/openvpn.log
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
@@ -659,7 +660,7 @@ log /tmp/openvpn.log
       var twitterWidgets = document.createElement('script');
       twitterWidgets.type = 'text/javascript';
       twitterWidgets.async = true;
-      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
       document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
     })();
   </script>

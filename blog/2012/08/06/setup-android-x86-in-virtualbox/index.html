@@ -98,7 +98,8 @@
 
 <time datetime="2012-08-06T09:38:00+08:00" pubdate data-updated="true">Aug 6<span>th</span>, 2012</time>
         
-         | <a href="#disqus_thread">Comments</a>
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://zhen9ao.github.io">Comments</a>
         
       </p>
     
@@ -121,7 +122,7 @@
 <li><code>Operating System</code>：<code>Linux</code>，<code>Version</code>：<code>Other Linux</code>。<code>内存</code>：<code>1024MB</code>，<code>硬盘空间</code>:<code>512MB</code>，其他选项可以使用默认配置。</li>
 <li>启动虚拟机。选择<code>Install to Hard Disk</code>进行安装。安装中要这样选择：</li>
 <li><code>Create/Modify partitions</code></li>
-<li><code>New</code> -> <code>Primary</code> -> <code>534MB</code> -> <code>Bootable</code> -> <code>Write</code> -> <code>yes</code> -> <code>Quit</code></li>
+<li><code>New</code> &ndash;> <code>Primary</code> &ndash;> <code>534MB</code> &ndash;> <code>Bootable</code> &ndash;> <code>Write</code> &ndash;> <code>yes</code> &ndash;> <code>Quit</code></li>
 <li>分区结束后在列表里就出现了刚创建的分区<code>sda1</code>。选择这个分区，格式化成<code>ext3</code>格式。接下来，一直选择<code>yes</code>.</li>
 <li>最后可以创建一个<code>Fake SD Card</code>，这样重启过后就安装完成了。</li>
 <li>安装完成后要记得将ISO文件移除，这样就可以从安装目录启动了。</li>
@@ -132,7 +133,7 @@
 
 <p>开发Android就是要适配不同的分辨率，但是默认启动的分辨率一般是不能满足需求的，所以可以配置几个启动参数，配置好后每次启动只需要选择即可。</p>
 
-<p>可以按这个帖子的内容进行配置：&#8211;> <a href="http://stackoverflow.com/a/8273560/401406">StackOverflow</a></p>
+<p>可以按这个帖子的内容进行配置：&mdash;> <a href="http://stackoverflow.com/a/8273560/401406">StackOverflow</a></p>
 
 <p>其中可以配置多个分辨率，然后设置成<code>vga=ask</code>，这样每次启动的时候就可以根据需要选择不同的分辨率。</p>
 
@@ -185,7 +186,7 @@
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://zhen9ao.github.io/blog/2012/08/06/setup-android-x86-in-virtualbox/" data-via="zhen9ao" data-counturl="http://zhen9ao.github.io/blog/2012/08/06/setup-android-x86-in-virtualbox/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://zhen9ao.github.io/blog/2012/08/06/setup-android-x86-in-virtualbox/" data-via="zhen9ao" data-counturl="http://zhen9ao.github.io/blog/2012/08/06/setup-android-x86-in-virtualbox/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -349,7 +350,7 @@
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
@@ -382,7 +383,7 @@
       var twitterWidgets = document.createElement('script');
       twitterWidgets.type = 'text/javascript';
       twitterWidgets.async = true;
-      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
       document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
     })();
   </script>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: OpenWrt | Jack's Blog]]></title>
   <link href="http://zhen9ao.github.io/blog/categories/openwrt/atom.xml" rel="self"/>
   <link href="http://zhen9ao.github.io/"/>
-  <updated>2013-10-31T10:27:40+08:00</updated>
+  <updated>2013-10-31T10:47:03+08:00</updated>
   <id>http://zhen9ao.github.io/</id>
   <author>
     <name><![CDATA[zhen9ao]]></name>
@@ -985,7 +985,7 @@ iptables -t nat -A POSTROUTING -s 192.168.2.0/24 -j MASQUERADE
 
 <h2>USB配置</h2>
 
-<p>wr703n只有4MB的闪存，装完OpenWrt以后，只剩--1.4Mb--的(现在rom自带了luci，所以刷好后的可用空间只有900多Kb了)可用空间了，这些空间只够装一些必备的工具，OpenVPN等一些软件就需要装载外挂的USB设备中了</p>
+<p>wr703n只有4MB的闪存，装完OpenWrt以后，只剩&mdash;1.4Mb&mdash;的(现在rom自带了luci，所以刷好后的可用空间只有900多Kb了)可用空间了，这些空间只够装一些必备的工具，OpenVPN等一些软件就需要装载外挂的USB设备中了</p>
 
 <h3>安装必备软件</h3>
 
@@ -1062,7 +1062,7 @@ mount /dev/sda1 /mnt/usb
 
 <ul>
 <li>可以配合使用chnroute，减少openvpn的流量消耗</li>
-<li>本文大部分内容都是源于这两个博客，感谢这两个博主的文章：<a href="http://blog.proadm.net/blog/2011/10/25/Building-a-GFWless-AP-on-WR703n/">Lei Yang's Geek Life</a> 和 <a href="http://www.ratazzi.org/2012/02/09/install-openvpn-and-openwrt-on-wr703n/">Ratazzis's Blog</a></li>
+<li>本文大部分内容都是源于这两个博客，感谢这两个博主的文章：<a href="http://blog.proadm.net/blog/2011/10/25/Building-a-GFWless-AP-on-WR703n/">Lei Yang&rsquo;s Geek Life</a> 和 <a href="http://www.ratazzi.org/2012/02/09/install-openvpn-and-openwrt-on-wr703n/">Ratazzis&rsquo;s Blog</a></li>
 </ul>
 
 

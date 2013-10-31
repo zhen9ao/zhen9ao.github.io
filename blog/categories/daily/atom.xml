@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Daily | Jack's Blog]]></title>
   <link href="http://zhen9ao.github.io/blog/categories/daily/atom.xml" rel="self"/>
   <link href="http://zhen9ao.github.io/"/>
-  <updated>2013-10-31T10:27:40+08:00</updated>
+  <updated>2013-10-31T10:47:03+08:00</updated>
   <id>http://zhen9ao.github.io/</id>
   <author>
     <name><![CDATA[zhen9ao]]></name>
@@ -22,7 +22,7 @@
 
 <p>在看Ruby的时候，发现有人在提zsh，于是打算再次尝试。之前装过，但是重装系统后觉得麻烦就没再装了，今天看到一个不错的项目<a href="https://github.com/robbyrussell/oh-my-zsh"><code>oh-my-zshell</code></a>。它是一个帮助我们安装、管理和配置zsh的工具，使用起来也很简单。按主页上的说明自动安装即可：</p>
 
-<blockquote><p>curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sh</p></blockquote>
+<blockquote><p>curl -L <a href="https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh">https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh</a> | sh</p></blockquote>
 
 <p>安装好了以后会在<code>~</code>目录创建一个<code>.zshrc</code>的zsh配置文件。其中前面的部分是<code>oh-my-zsh</code>的配置部分，可以对<code>配色</code>、<code>插件</code>进行配置。zsh的一个优势是和bash兼容，能执行<code>.bash_profile</code>或<code>.bashrc</code>中的配置，所以把bash的配置拷到zshrc的最后即可完成对已有配置的修改。</p>
 
@@ -49,7 +49,7 @@
 
 <p>之前一直觉得配置Ruby和Rails很麻烦，今天也发现了一个比较好的项目：<a href="https://github.com/thoughtbot/laptop"><code>Laptop</code></a>。它的作用就是输入一个命令，就可以把你的电脑变成一台开发用机，配置好Ruby和Rails的环境：</p>
 
-<blockquote><p>zsh &lt; &lt;(curl -s https://raw.github.com/thoughtbot/laptop/master/mac)</p></blockquote>
+<blockquote><p>zsh &lt; &lt;(curl -s <a href="https://raw.github.com/thoughtbot/laptop/master/mac">https://raw.github.com/thoughtbot/laptop/master/mac</a>)</p></blockquote>
 
 <h2>iOS</h2>
 

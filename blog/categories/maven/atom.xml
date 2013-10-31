@@ -4,7 +4,7 @@
   <title><![CDATA[Category: maven | Jack's Blog]]></title>
   <link href="http://zhen9ao.github.io/blog/categories/maven/atom.xml" rel="self"/>
   <link href="http://zhen9ao.github.io/"/>
-  <updated>2013-10-31T10:27:40+08:00</updated>
+  <updated>2013-10-31T10:47:03+08:00</updated>
   <id>http://zhen9ao.github.io/</id>
   <author>
     <name><![CDATA[zhen9ao]]></name>
@@ -89,7 +89,7 @@
 <p>本文件展示的是修改后的helloflashlight文件夹下的pom.xml文件</p>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>pom.xml </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -165,7 +165,7 @@
 <span class='line-number'>74</span>
 <span class='line-number'>75</span>
 <span class='line-number'>76</span>
-</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="ni">&amp;lt;</span>?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="ni">&amp;lt;</span>?xml version=<span class="ni">&amp;ldquo;</span>1.0<span class="ni">&amp;rdquo;</span> encoding=<span class="ni">&amp;ldquo;</span>UTF-8<span class="ni">&amp;rdquo;</span>?&gt;
 </span><span class='line'><span class="nt">&lt;project</span> <span class="na">xmlns=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span> <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd&quot;</span><span class="nt">&gt;&lt;/p&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span><span class="ni">&amp;lt;</span>modelVersion<span class="ni">&amp;gt;</span>4.0.0<span class="ni">&amp;lt;</span>/modelVersion<span class="ni">&amp;gt;</span>
@@ -245,7 +245,7 @@
 
 <p>需要注意的主要是以下几个部分：</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -261,7 +261,7 @@
 
 <p>这里需要将scope设置为provided</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -291,7 +291,7 @@
 
 <p>这里需要设置path，指向sdk的安装目录。"10"是对应的"android2.3.3"的版本号</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -379,9 +379,9 @@
 </span><span class='line'>[INFO] when not building a core library.
 </span><span class='line'>[INFO]
 </span><span class='line'>[INFO] This is often due to inadvertently including a core library file
-</span><span class='line'>[INFO] in your application's project, when using an IDE (such as
-</span><span class='line'>[INFO] Eclipse). If you are sure you're not intentionally defining a
-</span><span class='line'>[INFO] core class, then this is the most likely explanation of what's
+</span><span class='line'>[INFO] in your application&rsquo;s project, when using an IDE (such as
+</span><span class='line'>[INFO] Eclipse). If you are sure you&rsquo;re not intentionally defining a
+</span><span class='line'>[INFO] core class, then this is the most likely explanation of what&rsquo;s
 </span><span class='line'>[INFO] going on.
 </span><span class='line'>[INFO]
 </span><span class='line'>[INFO] However, you might actually be trying to define a class in a core
@@ -391,12 +391,12 @@
 </span><span class='line'>[INFO] compatibility of your app with future versions of the platform.
 </span><span class='line'>[INFO] It is also often of questionable legality.
 </span><span class='line'>[INFO]
-</span><span class='line'>[INFO] If you really intend to build a core library -- which is only
+</span><span class='line'>[INFO] If you really intend to build a core library &mdash; which is only
 </span><span class='line'>[INFO] appropriate as part of creating a full virtual machine
-</span><span class='line'>[INFO] distribution, as opposed to compiling an application -- then use
-</span><span class='line'>[INFO] the "--core-library" option to suppress this error message.
+</span><span class='line'>[INFO] distribution, as opposed to compiling an application &mdash; then use
+</span><span class='line'>[INFO] the &ldquo;&mdash;core-library&rdquo; option to suppress this error message.
 </span><span class='line'>[INFO]
-</span><span class='line'>[INFO] If you go ahead and use "--core-library" but are in fact
+</span><span class='line'>[INFO] If you go ahead and use &ldquo;&mdash;core-library&rdquo; but are in fact
 </span><span class='line'>[INFO] building an application, then be forewarned that your application
 </span><span class='line'>[INFO] will still fail to build or run, at some point. Please be
 </span><span class='line'>[INFO] prepared for angry customers who find, for example, that your
@@ -412,9 +412,9 @@
 </span><span class='line'>[INFO] that is an indication that the path you are on will ultimately
 </span><span class='line'>[INFO] lead to pain, suffering, grief, and lamentation.</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<p>提示中说明可以通过添加"--core-library"参数解决这个问题，具体在pom文件中就是在configuration部分加入如下代码：</p>
+<p>提示中说明可以通过添加"&mdash;core-library"参数解决这个问题，具体在pom文件中就是在configuration部分加入如下代码：</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -479,7 +479,7 @@
 </span><span class='line'>  -DgroupId=your.company \
 </span><span class='line'>  -DartifactId=my-android-application</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<p>默认情况下package名和groupId相同，可以使用'-Dpackage=...'的参数创建自定义的包名。创建的项目默认使用android2.2，可以通过'-Dplatform=...'设置使用的android sdk。</p>
+<p>默认情况下package名和groupId相同，可以使用'-Dpackage=&hellip;&lsquo;的参数创建自定义的包名。创建的项目默认使用android2.2，可以通过&rsquo;-Dplatform=&hellip;&lsquo;设置使用的android sdk。</p>
 ]]></content>
   </entry>
   
