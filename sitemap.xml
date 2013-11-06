@@ -2,67 +2,71 @@
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
         <loc>http://zhen9ao.github.io/blog/2011/11/16/hello-world/</loc>
-        <lastmod>2013-10-31T10:46:48+08:00</lastmod>
+        <lastmod>2013-11-06T13:03:35+08:00</lastmod>
     </url>
     <url>
         <loc>http://zhen9ao.github.io/blog/2011/11/20/shi-yong-mavebian-yi-androidxiang-mu/</loc>
-        <lastmod>2013-10-31T10:46:48+08:00</lastmod>
+        <lastmod>2013-11-06T13:03:35+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://zhen9ao.github.io/blog/2012/04/10/how-to-config-openwrt-with-openvpn-on-tp-link-wr703n/
         </loc>
-        <lastmod>2013-10-31T10:46:48+08:00</lastmod>
+        <lastmod>2013-11-06T13:03:35+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://zhen9ao.github.io/blog/2012/04/20/resolve-xcode-4-dot-3-2-organizer-crash/
         </loc>
-        <lastmod>2013-10-31T10:46:48+08:00</lastmod>
+        <lastmod>2013-11-06T13:03:35+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://zhen9ao.github.io/blog/2012/04/26/refresh-maven-dependency-manually-in-intellij-idea/
         </loc>
-        <lastmod>2013-10-31T10:46:48+08:00</lastmod>
+        <lastmod>2013-11-06T13:03:35+08:00</lastmod>
     </url>
     <url>
         <loc>http://zhen9ao.github.io/blog/2012/08/06/setup-android-x86-in-virtualbox/</loc>
-        <lastmod>2013-10-31T10:46:48+08:00</lastmod>
+        <lastmod>2013-11-06T13:03:35+08:00</lastmod>
     </url>
     <url>
         <loc>http://zhen9ao.github.io/blog/2012/10/11/what-did-i-do-today/</loc>
-        <lastmod>2013-10-31T10:46:48+08:00</lastmod>
+        <lastmod>2013-11-06T13:03:35+08:00</lastmod>
     </url>
     <url>
         <loc>http://zhen9ao.github.io/blog/2012/11/19/openwrttuo-ji-xia-zai/</loc>
-        <lastmod>2013-10-31T10:46:48+08:00</lastmod>
+        <lastmod>2013-11-06T13:03:35+08:00</lastmod>
     </url>
     <url>
         <loc>http://zhen9ao.github.io/blog/2012/12/06/openwrtde-dnspei-zhi/</loc>
-        <lastmod>2013-10-31T10:46:48+08:00</lastmod>
+        <lastmod>2013-11-06T13:03:35+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://zhen9ao.github.io/blog/2012/12/13/lu-you-qi-shang-shi-yong-cisco-ipseclian-jie-wang-luo/
         </loc>
-        <lastmod>2013-10-31T10:46:48+08:00</lastmod>
+        <lastmod>2013-11-06T13:03:35+08:00</lastmod>
     </url>
     <url>
         <loc>http://zhen9ao.github.io/blog/2013/05/07/ge-chong-dai-li-she-zhi/</loc>
-        <lastmod>2013-10-31T10:46:48+08:00</lastmod>
+        <lastmod>2013-11-06T13:03:35+08:00</lastmod>
     </url>
     <url>
         <loc>http://zhen9ao.github.io/blog/2013/08/08/pei-zhi-powerline/</loc>
-        <lastmod>2013-10-31T10:46:48+08:00</lastmod>
+        <lastmod>2013-11-06T13:03:35+08:00</lastmod>
     </url>
     <url>
         <loc>http://zhen9ao.github.io/blog/archives/</loc>
-        <lastmod>2013-10-31T10:46:48+08:00</lastmod>
+        <lastmod>2013-11-06T13:03:35+08:00</lastmod>
+    </url>
+    <url>
+        <loc>http://zhen9ao.github.io/blog/categories/</loc>
+        <lastmod>2013-11-06T13:03:35+08:00</lastmod>
     </url>
     <url>
         <loc>http://zhen9ao.github.io/</loc>
-        <lastmod>2013-10-31T10:46:48+08:00</lastmod>
+        <lastmod>2013-11-06T13:03:35+08:00</lastmod>
     </url>
     <url>
         <loc>http://zhen9ao.github.io/robots.txt</loc>

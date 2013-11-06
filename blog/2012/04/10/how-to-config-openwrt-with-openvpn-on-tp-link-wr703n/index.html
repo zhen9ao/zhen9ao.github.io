@@ -1,112 +1,131 @@
 
-<!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
-<head>
-  <meta charset="utf-8">
-  <title>在TP-Link上安装OpenWrt并配置OpenVPN - Jack's Blog</title>
-  <meta name="author" content="zhen9ao">
+<!DOCTYPE HTML>
 
-  
-  <meta name="description" content="路由器的选择 要安装OpenWrt，首先要选择一款适合的路由器。可以在OpenWrt的官网中查看支持的设备列表，从中选择可以使用的设备。最好选择带USB口的设备（这样可以接U盘，把需要的软件装到U盘中，比如OpenVPN和Python等组件），一般带USB口的设备都是3G路由器或比较高端的路由器， &hellip;">
-  
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>在TP-Link上安装OpenWrt并配置OpenVPN - Jack's Blog</title>
+	<meta name="author" content="zhen9ao">
+
+	
+	<meta name="description" content="在TP-Link上安装OpenWrt并配置OpenVPN 路由器的选择 要安装OpenWrt，首先要选择一款适合的路由器。可以在OpenWrt的官网中查看支持的设备列表，从中选择可以使用的设备。最好选择带USB口的设备（这样可以接U盘，把需要的软件装到U盘中， &hellip;">
+	
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  
-  <link rel="canonical" href="http://zhen9ao.github.io/blog/2012/04/10/how-to-config-openwrt-with-openvpn-on-tp-link-wr703n">
-  <link href="/favicon.png" rel="icon">
-  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="Jack's Blog" type="application/atom+xml">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+	<link href="/atom.xml" rel="alternate" title="Jack's Blog" type="application/atom+xml">
+	
+	<link rel="canonical" href="http://zhen9ao.github.io/blog/2012/04/10/how-to-config-openwrt-with-openvpn-on-tp-link-wr703n/">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<link href="/stylesheets/font-awesome.min.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700' rel='stylesheet' type='text/css'>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
   
-  <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-27179534-1']);
-    _gaq.push(['_trackPageview']);
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-27179534-1']);
+		_gaq.push(['_trackPageview']);
 
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-  </script>
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
 
 
 </head>
 
-<body   >
-  <header role="banner"><hgroup>
+
+<body>
+	<div class="container">
+		<div class="left-col">
+			<div class="intrude-less">
+			<header id="header" class="inner"><div class="profilepic">
+	
+	<script src="/javascripts/md5.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$('.profilepic').append("<img src='http://www.gravatar.com/avatar/" + MD5("zhen9ao@gmail.com") + "?s=160' alt='Profile Picture' style='width: 160px;' />");
+		});
+	</script>
+	
+</div>
+<hgroup>
   <h1><a href="/">Jack's Blog</a></h1>
   
     <h2>My blogging place</h2>
   
 </hgroup>
 
-</header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss">
-  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
-</ul>
-  
-<form action="http://google.com/search" method="get">
-  <fieldset role="search">
-    <input type="hidden" name="q" value="site:zhen9ao.github.io" />
-    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-  </fieldset>
-</form>
-  
-<ul class="main-navigation">
+<nav id="main-nav"><ul class="main-navigation">
   <li><a href="/">Blog</a></li>
   <li><a href="/blog/archives">Archives</a></li>
 </ul>
 
 </nav>
-  <div id="main">
-    <div id="content">
-      <div>
-<article class="hentry" role="article">
-  
-  <header>
-    
-      <h1 class="entry-title">在TP-Link上安装OpenWrt并配置OpenVPN</h1>
-    
-    
-      <p class="meta">
-        
+<nav id="sub-nav">
+	<div class="social">
+		
+			<a class="email" href="mailto:zhen9ao@gmail.com" title="Email">Email</a>
+		
+		
+		
+			<a class="google" href="https://plus.google.com/108753779288616834499" rel="author" title="Google+">Google+</a>
+		
+		
+			<a class="twitter" href="http://twitter.com/zhen9ao" title="Twitter">Twitter</a>
+		
+		
+			<a class="github" href="https://github.com/zhen9ao" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+			<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+</nav>
+</header>				
+			</div>
+		</div>	
+		<div class="mid-col">
+			
+				
+<div id="banner" class="inner">
+	<div class="container">
+		<ul class="feed"></ul>
+	</div>
+	<small><a href="http://twitter.com/zhen9ao">zhen9ao</a> @ <a href="http://twitter.com">Twitter</a></small>
+	<div class="loading">Loading...</div>
+</div>
+<script src="/javascripts/twitter.js"></script>
+<script type="text/javascript">
+	(function($){
+		$('#banner').getTwitterFeed('zhen9ao', 5, true);
+	})(jQuery);
+</script>
 
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-04-10T10:18:00+08:00" pubdate data-updated="true">Apr 10<span>th</span>, 2012</time>
-        
-           | <a href="#disqus_thread"
-             data-disqus-identifier="http://zhen9ao.github.io">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-<div class="entry-content"><h2>路由器的选择</h2>
+			
+			<div class="mid-col-container">
+				<div id="content" class="inner"><article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+	<h1 class="title" itemprop="name">在TP-Link上安装OpenWrt并配置OpenVPN</h1>
+	<div class="entry-content" itemprop="articleBody"><h2>路由器的选择</h2>
 
 <p>要安装OpenWrt，首先要选择一款适合的路由器。可以在OpenWrt的官网中查看支持的<a href="http://wiki.openwrt.org/toh/start">设备列表</a>，从中选择可以使用的设备。最好选择带USB口的设备（这样可以接U盘，把需要的软件装到U盘中，比如OpenVPN和Python等组件），一般带USB口的设备都是3G路由器或比较高端的路由器，从节约成本的角度考虑，最好是选择3G路由器，高端路由器当然更好，有更强大的CPU。</p>
 
@@ -429,192 +448,40 @@ log /tmp/openvpn.log
 <p>这样，重启后就搞定了。</p>
 </div>
 
-
-  <footer>
-    <p class="meta">
-      
-  
-
-<span class="byline author vcard">Posted by <span class="fn">zhen9ao</span></span>
-
-      
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-04-10T10:18:00+08:00" pubdate data-updated="true">Apr 10<span>th</span>, 2012</time>
-      
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/openvpn/'>OpenVPN</a>, <a class='category' href='/blog/categories/openwrt/'>OpenWrt</a>
-  
-</span>
-
-
-    </p>
-    
-      <div class="sharing">
-  
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://zhen9ao.github.io/blog/2012/04/10/how-to-config-openwrt-with-openvpn-on-tp-link-wr703n/" data-via="zhen9ao" data-counturl="http://zhen9ao.github.io/blog/2012/04/10/how-to-config-openwrt-with-openvpn-on-tp-link-wr703n/" >Tweet</a>
-  
-  
-  <div class="g-plusone" data-size="medium"></div>
-  
-  
-    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
-  
-</div>
-
-    
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/blog/2011/11/20/shi-yong-mavebian-yi-androidxiang-mu/" title="Previous Post: 使用mave编译Android项目">&laquo; 使用mave编译Android项目</a>
-      
-      
-        <a class="basic-alignment right" href="/blog/2012/04/20/resolve-xcode-4-dot-3-2-organizer-crash/" title="Next Post: 解决Xcode4.3.2打开Organizer中的devices就崩溃的问题">解决Xcode4.3.2打开Organizer中的devices就崩溃的问题 &raquo;</a>
-      
-    </p>
-  </footer>
 </article>
 
-  <section>
-    <h1>Comments</h1>
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	<a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
     <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
-  </section>
-
+</section>
 </div>
-
-<aside class="sidebar">
-  
-    <section>
-  <h1>Categories</h1>
-  <ul id="categories">
-    <li class='category'><a href='/blog/categories/android/'>Android (1)</a></li>
-<li class='category'><a href='/blog/categories/bt/'>BT (1)</a></li>
-<li class='category'><a href='/blog/categories/daily/'>Daily (1)</a></li>
-<li class='category'><a href='/blog/categories/ipsec/'>IPSec (1)</a></li>
-<li class='category'><a href='/blog/categories/mac/'>Mac (1)</a></li>
-<li class='category'><a href='/blog/categories/macos/'>MacOS (1)</a></li>
-<li class='category'><a href='/blog/categories/openvpn/'>OpenVPN (2)</a></li>
-<li class='category'><a href='/blog/categories/openwrt/'>OpenWrt (4)</a></li>
-<li class='category'><a href='/blog/categories/powerline/'>Powerline (1)</a></li>
-<li class='category'><a href='/blog/categories/proxy/'>Proxy (1)</a></li>
-<li class='category'><a href='/blog/categories/terminal/'>Terminal (1)</a></li>
-<li class='category'><a href='/blog/categories/virtualbox/'>VirtualBox (1)</a></li>
-<li class='category'><a href='/blog/categories/xcode/'>Xcode (1)</a></li>
-<li class='category'><a href='/blog/categories/java/'>java (1)</a></li>
-<li class='category'><a href='/blog/categories/maven/'>maven (2)</a></li>
-
-  </ul>
-</section>
-<section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/blog/2013/08/08/pei-zhi-powerline/">配置Powerline</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/07/ge-chong-dai-li-she-zhi/">各种代理设置</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/12/13/lu-you-qi-shang-shi-yong-cisco-ipseclian-jie-wang-luo/">路由器上使用Cisco IPSec连接网络</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/12/06/openwrtde-dnspei-zhi/">OpenWrt的DNS配置</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/11/19/openwrttuo-ji-xia-zai/">OpenWrt脱机下载</a>
-      </li>
-    
-  </ul>
-</section>
-
-<section>
-  <h1>GitHub Repos</h1>
-  <ul id="gh_repos">
-    <li class="loading">Status updating...</li>
-  </ul>
-  
-  <a href="https://github.com/zhen9ao">@zhen9ao</a> on GitHub
-  
-  <script type="text/javascript">
-    $(document).ready(function(){
-        if (!window.jXHR){
-            var jxhr = document.createElement('script');
-            jxhr.type = 'text/javascript';
-            jxhr.src = '/javascripts/libs/jXHR.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(jxhr, s);
-        }
-
-        github.showRepos({
-            user: 'zhen9ao',
-            count: 0,
-            skip_forks: true,
-            target: '#gh_repos'
-        });
-    });
-  </script>
-  <script src="/javascripts/github.js" type="text/javascript"> </script>
-</section>
-
-
-<section>
-  <h1>Latest Tweets</h1>
-  <ul id="tweets">
-    <li class="loading">Status updating...</li>
-  </ul>
-  <script type="text/javascript">
-    $.domReady(function(){
-      getTwitterFeed("zhen9ao", 5, true);
-    });
-  </script>
-  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
-  
-    <a href="http://twitter.com/zhen9ao" class="twitter-follow-button" data-show-count="true">Follow @zhen9ao</a>
-  
-</section>
-
-
-
-<section class="googleplus">
-  <h1>
-    <a href="https://plus.google.com/108753779288616834499?rel=author">
-      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
-      Google+
-    </a>
-  </h1>
-</section>
-
-
-
-  
-</aside>
-
-
-    </div>
-  </div>
-  <footer role="contentinfo"><p>
+			</div>
+			<footer id="footer" class="inner"><p>
   Copyright &copy; 2013 - zhen9ao -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 
-</footer>
-  
+Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a></footer>
+			
 
 <script type="text/javascript">
       var disqus_shortname = 'zhen9ao';
@@ -627,7 +494,7 @@ log /tmp/openvpn.log
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
@@ -669,5 +536,7 @@ log /tmp/openvpn.log
 
 
 
+		</div>
+	</div>
 </body>
 </html>
